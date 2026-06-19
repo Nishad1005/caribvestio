@@ -5,39 +5,127 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Theme-aware surface & text tokens. Light values; .dark flips them.
+   Stored as space-separated RGB triplets so Tailwind's rgb(var() / <alpha>) works. */
+:root {
+  --c-background: 251 249 244;
+  --c-surface: 251 249 244;
+  --c-surface-bright: 251 249 244;
+  --c-surface-dim: 219 218 213;
+  --c-surface-variant: 228 226 221;
+  --c-surface-container-lowest: 255 255 255;
+  --c-surface-container-low: 245 243 238;
+  --c-surface-container: 240 238 233;
+  --c-surface-container-high: 234 232 227;
+  --c-surface-container-highest: 228 226 221;
+  --c-on-surface: 27 28 25;
+  --c-on-surface-variant: 69 70 77;
+  --c-inverse-surface: 48 49 46;
+  --c-inverse-on-surface: 242 241 236;
+  --c-outline-variant: 198 198 205;
+}
+
+.dark {
+  --c-background: 9 9 11;
+  --c-surface: 9 9 11;
+  --c-surface-bright: 24 24 27;
+  --c-surface-dim: 9 9 11;
+  --c-surface-variant: 39 39 42;
+  --c-surface-container-lowest: 24 24 27;
+  --c-surface-container-low: 24 24 27;
+  --c-surface-container: 39 39 42;
+  --c-surface-container-high: 39 39 42;
+  --c-surface-container-highest: 63 63 70;
+  --c-on-surface: 244 244 245;
+  --c-on-surface-variant: 161 161 170;
+  --c-inverse-surface: 244 244 245;
+  --c-inverse-on-surface: 24 24 27;
+  --c-outline-variant: 39 39 42;
+}
+
+@layer base {
+  /* Consistent, visible keyboard focus ring across themes */
+  :where(a, button, [role="button"], input, select, textarea, [tabindex]):focus-visible {
+    outline: 2px solid rgb(var(--c-on-surface));
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* Dark-mode readability fallback.
+     These brand tokens are static dark colors (navy / slate) intended as text
+     on LIGHT surfaces. In dark mode the surface flips dark, so the text would be
+     invisible. We lift them to light here. Placed in @layer base so any explicit
+     `dark:text-*` utility on an element still overrides this fallback.
+     NOTE: text-on-primary-fixed and text-on-secondary-fixed are intentionally
+     excluded — they sit on surfaces that stay light in dark mode (white CTA, cream button). */
+  .dark .text-primary { color: rgb(244 244 245); }            /* zinc-100 */
+  .dark .text-primary-container { color: rgb(244 244 245); }
+  .dark .text-tertiary { color: rgb(244 244 245); }
+  .dark .text-secondary { color: rgb(161 161 170); }          /* zinc-400 */
+  .dark .text-surface-tint { color: rgb(212 212 216); }       /* zinc-300 */
+}
+
+@layer components {
+  /* Unified button system: .btn + a variant */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full font-label-md text-label-md text-center px-8 py-4 transition-all duration-300 cursor-pointer select-none;
+  }
+  .btn-primary {
+    @apply bg-primary text-on-primary shadow-card hover:scale-105 hover:shadow-raised active:scale-100;
+  }
+  .btn-outline {
+    @apply border border-on-surface/25 text-on-surface hover:bg-on-surface/5 hover:scale-105;
+  }
+  .btn-accent {
+    @apply bg-secondary-fixed text-on-secondary-fixed shadow-card hover:bg-secondary-fixed-dim hover:scale-105;
+  }
+  .btn-text {
+    @apply rounded-none px-0 py-1 border-b border-primary text-primary hover:text-surface-tint;
+  }
+}
+
 @layer utilities {
   .glass-panel {
-    background: rgba(251, 249, 244, 0.8);
+    background: rgb(var(--c-surface) / 0.8);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
   }
   .ambient-shadow {
     box-shadow: 0px 20px 40px rgba(15, 23, 42, 0.05);
   }
+  .soft-shadow {
+    box-shadow: 0px 8px 24px rgba(15, 23, 42, 0.06);
+  }
   .hero-overlay {
     background: radial-gradient(circle at center, rgba(19, 27, 46, 0.4) 0%, rgba(19, 27, 46, 0.85) 100%);
   }
 }
 
-/* Custom Scrollbar */
+/* Custom Scrollbar (track/thumb flip automatically via the theme variables) */
 ::-webkit-scrollbar {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: theme('colors.background');
+  background: rgb(var(--c-background));
 }
 ::-webkit-scrollbar-thumb {
-  background: theme('colors.outline-variant');
+  background: rgb(var(--c-outline-variant));
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: theme('colors.outline');
+  background: #76777d;
 }
-html.dark ::-webkit-scrollbar-track {
-  background: theme('colors.on-primary-fixed');
-}
-html.dark ::-webkit-scrollbar-thumb {
-  background: theme('colors.on-primary-fixed-variant');
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* View Transitions for Theme Toggle */
@@ -58,4 +146,3 @@ html.dark ::-webkit-scrollbar-thumb {
 .dark::view-transition-new(root) {
   z-index: 1;
 }
-

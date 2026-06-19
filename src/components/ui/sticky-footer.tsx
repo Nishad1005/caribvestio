@@ -8,6 +8,7 @@ import {
 	Video,
 } from 'lucide-react';
 import { Button } from './button';
+import Logo from '@/components/Logo';
 
 interface FooterLink {
 	title: string;
@@ -28,9 +29,9 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
 			style={{ clipPath: 'polygon(0% 0, 100% 0%, 100% 100%, 0 100%)' }}
 			{...props}
 		>
-			<div className="fixed bottom-0 h-[720px] w-full bg-background dark:bg-black text-on-surface dark:text-zinc-50 transition-colors duration-500">
+			<div className="fixed bottom-0 h-[720px] w-full bg-background text-on-surface transition-colors duration-500">
 				<div className="sticky top-[calc(100vh-720px)] h-full overflow-y-auto">
-					<div className="relative flex size-full flex-col justify-between gap-5 border-t border-outline-variant/50 dark:border-zinc-800 px-4 py-8 md:px-12 bg-surface-container-low dark:bg-zinc-950 transition-colors duration-500">
+					<div className="relative flex size-full flex-col justify-between gap-5 border-t border-outline-variant/50 px-4 py-8 md:px-12 bg-surface-container-low transition-colors duration-500">
 						<div
 							aria-hidden
 							className="absolute inset-0 isolate z-0 contain-strict pointer-events-none"
@@ -41,15 +42,13 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
 						</div>
 						<div className="mt-10 flex flex-col gap-8 md:flex-row xl:mt-0 relative z-10 max-w-container-max mx-auto w-full pt-12">
 							<AnimatedContainer className="w-full max-w-sm min-w-2xs space-y-4">
-								<div className="font-headline-lg text-headline-lg font-bold tracking-tight text-primary dark:text-on-primary">
-									CaribVestio
-								</div>
-								<p className="text-secondary dark:text-zinc-400 mt-8 text-sm md:mt-0 max-w-xs">
+								<Logo tagline />
+								<p className="text-on-surface-variant mt-8 text-sm md:mt-0 max-w-xs">
 									Premium corporate wear designed for the climate, crafted for durability, and styled to elevate your brand's professional image across the Caribbean.
 								</p>
 								<div className="flex gap-2 pt-4">
 									{socialLinks.map((link) => (
-										<Button key={link.title} size="icon" variant="outline" className="size-8 dark:border-zinc-700 dark:text-zinc-400 dark:hover:bg-zinc-800 transition-colors">
+										<Button key={link.title} size="icon" variant="outline" className="size-8 transition-colors">
 											<link.icon className="size-4" />
 										</Button>
 									))}
@@ -62,13 +61,13 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
 									className="w-full"
 								>
 									<div className="mb-10 md:mb-0">
-										<h3 className="text-sm font-label-lg uppercase tracking-wider text-primary dark:text-zinc-100">{group.label}</h3>
-										<ul className="text-secondary dark:text-zinc-400 mt-4 space-y-3 text-sm md:text-sm lg:text-sm">
+										<h3 className="text-sm font-label-lg uppercase tracking-wider text-primary dark:text-on-primary">{group.label}</h3>
+										<ul className="text-on-surface-variant mt-4 space-y-3 text-sm md:text-sm lg:text-sm">
 											{group.links.map((link) => (
 												<li key={link.title}>
 													<a
 														href={link.href}
-														className="hover:text-primary dark:hover:text-zinc-100 inline-flex items-center transition-all duration-300"
+														className="hover:text-primary dark:hover:text-on-primary inline-flex items-center transition-all duration-300"
 													>
 														{link.icon && <link.icon className="me-2 size-4" />}
 														{link.title}
@@ -80,7 +79,7 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
 								</AnimatedContainer>
 							))}
 						</div>
-						<div className="text-secondary dark:text-zinc-500 flex flex-col items-center justify-between gap-2 border-t border-outline-variant/50 dark:border-zinc-800 pt-6 mt-12 text-sm md:flex-row relative z-10 max-w-container-max mx-auto w-full">
+						<div className="text-on-surface-variant flex flex-col items-center justify-between gap-2 border-t border-outline-variant/50 pt-6 mt-12 text-sm md:flex-row relative z-10 max-w-container-max mx-auto w-full">
 							<p>© 2026 CaribVestio. All rights reserved.</p>
 							<p>Designed for the Caribbean</p>
 						</div>
@@ -105,7 +104,7 @@ const footerLinkGroups: FooterLinkGroup[] = [
 			{ title: 'Hospitality', href: '/hospitality-collection' },
 			{ title: 'Executive Suite', href: '/executive-suite' },
 			{ title: 'Healthcare', href: '/collections' },
-			{ title: 'Industrial', href: '/industries' },
+			{ title: 'Industrial', href: '/collections' },
 			{ title: 'All Uniforms', href: '/collections' },
 		],
 	},

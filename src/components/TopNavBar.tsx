@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import { flushSync } from 'react-dom';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useTheme } from 'next-themes';
 import { MenuBar } from '@/components/ui/glow-menu';
-import { Home, ShoppingBag, Building, Package, Info, Sun, Moon, MessageSquare } from 'lucide-react';
+import Logo from '@/components/Logo';
+import { Home, ShoppingBag, Package, Info, Sun, Moon, MessageSquare, User } from 'lucide-react';
 
 export default function TopNavBar() {
   const { theme, setTheme } = useTheme();
@@ -26,13 +27,6 @@ export default function TopNavBar() {
       iconColor: "text-orange-500",
     },
     {
-      icon: Building,
-      label: "Industries",
-      href: "/industries",
-      gradient: "radial-gradient(circle, rgba(34,197,94,0.15) 0%, rgba(22,163,74,0.06) 50%, rgba(21,128,61,0) 100%)",
-      iconColor: "text-green-500",
-    },
-    {
       icon: Package,
       label: "Bulk Orders",
       href: "/bulk-orders",
@@ -52,6 +46,13 @@ export default function TopNavBar() {
       href: "/contact",
       gradient: "radial-gradient(circle, rgba(236,72,153,0.15) 0%, rgba(219,39,119,0.06) 50%, rgba(190,24,93,0) 100%)",
       iconColor: "text-pink-500",
+    },
+    {
+      icon: User,
+      label: "Login",
+      href: "/login",
+      gradient: "radial-gradient(circle, rgba(14,165,233,0.15) 0%, rgba(2,132,199,0.06) 50%, rgba(3,105,161,0) 100%)",
+      iconColor: "text-sky-500",
     },
     {
       icon: theme === 'dark' ? Moon : Sun,
@@ -120,11 +121,7 @@ export default function TopNavBar() {
     }
   }, [theme]);
 
-  const brandLogo = (
-    <Link className="font-headline-md text-headline-md font-bold tracking-tight text-primary dark:text-on-primary hover:scale-105 transition-transform" to="/">
-      CaribVestio
-    </Link>
-  );
+  const brandLogo = <Logo />;
 
   return (
     <div className="fixed top-0 left-0 w-full z-50 hidden md:block">
