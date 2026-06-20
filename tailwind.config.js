@@ -43,6 +43,9 @@ export default {
         "destructive": "#ba1a1a",
         "destructive-foreground": "#ffffff",
         "outline": "#76777d",
+        // Warm accent (Caribbean gold) — for eyebrows, underlines, dividers, highlights
+        "gold": "#c8a24c",
+        "gold-dim": "#a8842f",
         // Theme-aware surfaces & text (flip via CSS variables in dark mode)
         "background": "rgb(var(--c-background) / <alpha-value>)",
         "surface": "rgb(var(--c-surface) / <alpha-value>)",

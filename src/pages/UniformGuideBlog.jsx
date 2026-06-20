@@ -1,3 +1,5 @@
+import { ArrowRight } from 'lucide-react';
+
 export default function UniformGuideBlog() {
   return (
     <>
@@ -57,7 +59,7 @@ export default function UniformGuideBlog() {
 <h3 className="font-headline-md text-headline-md text-primary mb-3 leading-snug group-hover:text-surface-tint transition-colors">Chef Coat Buying Guide: Form Meets Function</h3>
 <p className="font-body-md text-body-md text-on-surface-variant mb-4 flex-grow line-clamp-3">Navigate the complexities of culinary apparel to find coats that withstand the heat while maintaining a pristine, professional appearance.</p>
 <div className="font-label-md text-label-md text-primary mt-auto flex items-center group-hover:underline">
-                                Read Article <span className="material-symbols-outlined ml-1 text-[18px]">arrow_forward</span>
+                                Read Article <ArrowRight className="ml-1 h-5 w-5" />
 </div>
 </div>
 </article>
@@ -71,7 +73,7 @@ export default function UniformGuideBlog() {
 <h3 className="font-headline-md text-headline-md text-primary mb-3 leading-snug group-hover:text-surface-tint transition-colors">Embroidery vs. Printing: Making Your Mark</h3>
 <p className="font-body-md text-body-md text-on-surface-variant mb-4 flex-grow line-clamp-3">A detailed breakdown of apparel decoration methods to ensure your brand's logo is presented with maximum impact and longevity.</p>
 <div className="font-label-md text-label-md text-primary mt-auto flex items-center group-hover:underline">
-                                Read Article <span className="material-symbols-outlined ml-1 text-[18px]">arrow_forward</span>
+                                Read Article <ArrowRight className="ml-1 h-5 w-5" />
 </div>
 </div>
 </article>
@@ -85,7 +87,7 @@ export default function UniformGuideBlog() {
 <h3 className="font-headline-md text-headline-md text-primary mb-3 leading-snug group-hover:text-surface-tint transition-colors">Best Fabric Choices for the Tropics</h3>
 <p className="font-body-md text-body-md text-on-surface-variant mb-6">Combat the Caribbean heat without sacrificing style. We explore the latest in moisture-wicking and breathable textile engineering.</p>
 <div className="font-label-md text-label-md text-primary mt-auto flex items-center group-hover:underline">
-                                Read Article <span className="material-symbols-outlined ml-1 text-[18px]">arrow_forward</span>
+                                Read Article <ArrowRight className="ml-1 h-5 w-5" />
 </div>
 </div>
 </article>

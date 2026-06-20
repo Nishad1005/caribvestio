@@ -4,6 +4,7 @@ import { AnimatePresence } from 'framer-motion';
 import { ThemeProvider } from 'next-themes';
 import Layout from './components/Layout';
 import PageTransition from './components/PageTransition';
+import Intro from './components/Intro';
 
 // Landing page stays eager for fast first paint; the rest are code-split.
 import Home from './pages/Home';
@@ -70,6 +71,7 @@ function AnimatedRoutes() {
 export default function App() {
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      <Intro />
       <BrowserRouter>
         <Layout>
           <AnimatedRoutes />

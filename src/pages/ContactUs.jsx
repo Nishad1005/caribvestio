@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { MapPin, Phone, Mail, MailCheck, ChevronDown, MessageCircle } from 'lucide-react';
 
 const fieldBase =
   'w-full bg-transparent border-0 border-b rounded-none px-0 py-3 font-body-md text-body-md text-on-surface placeholder:text-outline-variant focus:ring-0 transition-colors';
@@ -57,21 +58,21 @@ export default function ContactUs() {
           <div className="bg-surface-container-lowest rounded-xl p-8 soft-shadow flex flex-col gap-6">
             <h2 className="font-headline-md text-headline-md text-primary mb-2">Get in Touch</h2>
             <div className="flex items-start gap-4">
-              <span className="material-symbols-outlined text-surface-tint mt-1">location_on</span>
+              <MapPin className="text-surface-tint mt-1 h-5 w-5" />
               <div>
                 <h3 className="font-label-md text-label-md text-primary mb-1 uppercase tracking-wider">Central Office</h3>
                 <p className="font-body-md text-body-md text-on-surface-variant">124 Corporate Boulevard<br />Kingston, Jamaica, W.I.</p>
               </div>
             </div>
             <div className="flex items-start gap-4">
-              <span className="material-symbols-outlined text-surface-tint mt-1">call</span>
+              <Phone className="text-surface-tint mt-1 h-5 w-5" />
               <div>
                 <h3 className="font-label-md text-label-md text-primary mb-1 uppercase tracking-wider">Phone &amp; WhatsApp</h3>
                 <p className="font-body-md text-body-md text-on-surface-variant">+1 (876) 555-0199</p>
               </div>
             </div>
             <div className="flex items-start gap-4">
-              <span className="material-symbols-outlined text-surface-tint mt-1">mail</span>
+              <Mail className="text-surface-tint mt-1 h-5 w-5" />
               <div>
                 <h3 className="font-label-md text-label-md text-primary mb-1 uppercase tracking-wider">Email</h3>
                 <p className="font-body-md text-body-md text-on-surface-variant">corporate@caribvestio.com</p>
@@ -92,7 +93,7 @@ export default function ContactUs() {
 
             {status === 'success' ? (
               <div role="status" className="rounded-lg border border-on-tertiary-container/30 bg-tertiary-fixed/30 p-8 text-center space-y-3">
-                <span className="material-symbols-outlined text-on-tertiary-container text-4xl">mark_email_read</span>
+                <MailCheck className="text-on-tertiary-container h-6 w-6 mx-auto" />
                 <h3 className="font-headline-md text-2xl text-primary">Message sent</h3>
                 <p className="font-body-md text-body-md text-on-surface-variant">
                   Thanks, {form.name.split(' ')[0] || 'there'}! Our team will be in touch within 48 hours.
@@ -109,7 +110,7 @@ export default function ContactUs() {
                       <option>Sample Request</option>
                       <option>Custom Fitting Session</option>
                     </select>
-                    <span className="material-symbols-outlined absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none text-outline">expand_more</span>
+                    <ChevronDown className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none text-outline h-5 w-5" />
                   </div>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -151,7 +152,7 @@ export default function ContactUs() {
       </div>
 
       <a aria-label="Chat with us on WhatsApp" className="fixed bottom-20 md:bottom-8 right-4 md:right-8 bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:scale-110 transition-transform duration-300 z-40 flex items-center justify-center" href="#">
-        <span className="material-symbols-outlined">chat</span>
+        <MessageCircle className="h-5 w-5" />
       </a>
     </section>
   );

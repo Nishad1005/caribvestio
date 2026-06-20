@@ -1,3 +1,5 @@
+import { SlidersHorizontal, ArrowRight, Heart, BadgeCheck, Droplets } from 'lucide-react';
+
 export default function ShopCollections() {
   return (
     <>
@@ -75,7 +77,7 @@ export default function ShopCollections() {
             <div className="bg-surface-container-lowest p-6 rounded-xl ambient-shadow border border-surface-variant">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="font-headline-md text-headline-md text-primary text-[24px]">Filters</h3>
-                <span className="material-symbols-outlined text-secondary cursor-pointer" data-icon="tune">tune</span>
+                <SlidersHorizontal className="text-secondary cursor-pointer h-5 w-5" />
               </div>
               {/* Category Filter */}
               <div className="mb-6">
@@ -124,7 +126,7 @@ export default function ShopCollections() {
                     <h3 className="font-headline-xl-mobile text-headline-xl-mobile md:font-headline-xl md:text-headline-xl text-on-primary mb-2">Resort Wear</h3>
                     <p className="font-body-md text-body-md text-surface-container-high">Breeze through elegance.</p>
                   </div>
-                  <span className="material-symbols-outlined text-on-primary bg-on-primary-fixed/50 backdrop-blur-md p-3 rounded-full group-hover:bg-on-primary-fixed transition-colors" data-icon="arrow_forward">arrow_forward</span>
+                  <ArrowRight className="text-on-primary bg-on-primary-fixed/50 backdrop-blur-md p-3 rounded-full group-hover:bg-on-primary-fixed transition-colors h-6 w-6" />
                 </div>
               </div>
               {/* Safety Banner */}
@@ -136,7 +138,7 @@ export default function ShopCollections() {
                     <h3 className="font-headline-xl-mobile text-headline-xl-mobile md:font-headline-xl md:text-headline-xl text-on-primary mb-2">Safety First</h3>
                     <p className="font-body-md text-body-md text-surface-container-high">Protection meets prestige.</p>
                   </div>
-                  <span className="material-symbols-outlined text-on-primary bg-on-primary-fixed/50 backdrop-blur-md p-3 rounded-full group-hover:bg-on-primary-fixed transition-colors" data-icon="arrow_forward">arrow_forward</span>
+                  <ArrowRight className="text-on-primary bg-on-primary-fixed/50 backdrop-blur-md p-3 rounded-full group-hover:bg-on-primary-fixed transition-colors h-6 w-6" />
                 </div>
               </div>
             </div>
@@ -151,7 +153,7 @@ export default function ShopCollections() {
                 <div className="relative aspect-[4/5] overflow-hidden bg-surface">
                   <img alt="Executive Suit" className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-oKgseW_OgiRfvfCrOA_7V2XrMRQKOlvGbuz-ZBuHvZNITH_IioMs4UoBxk6P_4Oo_t4O1QP-BkHQmAFVEeaUsguO-r466ZCCm-mXDdA2v88ebrpNRezuEvER_a2zvw5T1nrqzVt49Fnj8YqaCdG0RyLwWR2lIIWs-WfMagRl6VfwmIuFq-6Fdda-i6SqDpy1dScLDHScfvgVfikRSX4eAD4mnrSuEYTsTXpuWbRVdPT6qFMzjyK4Dd-8As-XOs5EK_tndfTZ_hMq"/>
                   <div className="absolute top-4 right-4 bg-surface-container-lowest/80 backdrop-blur-sm p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-pointer">
-                    <span className="material-symbols-outlined text-primary" data-icon="favorite_border">favorite_border</span>
+                    <Heart className="text-primary h-5 w-5" />
                   </div>
                 </div>
                 <div className="p-6 flex flex-col flex-grow">
@@ -210,7 +212,7 @@ export default function ShopCollections() {
               <div className="space-y-6">
                 <div className="flex items-start">
                   <div className="bg-surface p-3 rounded-full shadow-sm mr-4 mt-1 border border-outline-variant/30">
-                    <span className="material-symbols-outlined text-on-tertiary-container icon-fill">verified</span>
+                    <BadgeCheck className="text-on-tertiary-container h-5 w-5" />
                   </div>
                   <div>
                     <h4 className="font-label-md text-label-md text-primary mb-1">Brand Consistency</h4>
@@ -219,7 +221,7 @@ export default function ShopCollections() {
                 </div>
                 <div className="flex items-start">
                   <div className="bg-surface p-3 rounded-full shadow-sm mr-4 mt-1 border border-outline-variant/30">
-                    <span className="material-symbols-outlined text-on-tertiary-container icon-fill">water_drop</span>
+                    <Droplets className="text-on-tertiary-container h-5 w-5" />
                   </div>
                   <div>
                     <h4 className="font-label-md text-label-md text-primary mb-1">Climate Optimized</h4>

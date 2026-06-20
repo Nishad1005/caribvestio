@@ -1,3 +1,5 @@
+import { BadgeCheck, Truck, Globe } from 'lucide-react';
+
 export default function About() {
   return (
     <>
@@ -41,17 +43,17 @@ export default function About() {
 </div>
 <div className="grid grid-cols-1 md:grid-cols-3 gap-grid-gutter">
 <div className="bg-surface-container-lowest p-8 rounded-xl shadow-[0px_20px_40px_rgba(15,23,42,0.05)] flex flex-col items-center text-center">
-<span className="material-symbols-outlined text-4xl text-on-tertiary-container mb-4">verified</span>
+<BadgeCheck className="h-6 w-6 text-on-tertiary-container mb-4" />
 <h3 className="font-headline-md text-headline-md text-primary mb-2">Quality</h3>
 <p className="font-body-md text-body-md text-on-surface-variant">Premium materials selected for durability and comfort in warm climates.</p>
 </div>
 <div className="bg-surface-container-lowest p-8 rounded-xl shadow-[0px_20px_40px_rgba(15,23,42,0.05)] flex flex-col items-center text-center">
-<span className="material-symbols-outlined text-4xl text-on-tertiary-container mb-4">local_shipping</span>
+<Truck className="h-6 w-6 text-on-tertiary-container mb-4" />
 <h3 className="font-headline-md text-headline-md text-primary mb-2">Speed</h3>
 <p className="font-body-md text-body-md text-on-surface-variant">Streamlined B2B fulfillment designed to outfit your team rapidly.</p>
 </div>
 <div className="bg-surface-container-lowest p-8 rounded-xl shadow-[0px_20px_40px_rgba(15,23,42,0.05)] flex flex-col items-center text-center md:col-span-1">
-<span className="material-symbols-outlined text-4xl text-on-tertiary-container mb-4">public</span>
+<Globe className="h-6 w-6 text-on-tertiary-container mb-4" />
 <h3 className="font-headline-md text-headline-md text-primary mb-2">Regional Presence</h3>
 <p className="font-body-md text-body-md text-on-surface-variant">Deeply rooted in the Caribbean, understanding local business needs.</p>
 </div>

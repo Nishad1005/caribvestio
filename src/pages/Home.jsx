@@ -1,7 +1,8 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ClipboardList, FileText, CheckCircle2, Truck, ChevronRight, Factory, Scale, HandCoins, Scissors, Globe } from 'lucide-react';
+import { ClipboardList, FileText, CheckCircle2, Truck, ChevronRight, Factory, Scale, HandCoins, Scissors, Globe, Package, Sparkles, Ruler, Layers, Quote, ChevronDown } from 'lucide-react';
 import IndustryCarousel from '@/components/ui/carousel-card';
+import { LogoIcon } from '@/components/Logo';
 import { industries } from '@/data/industries';
 
 export default function Home() {
@@ -50,6 +51,7 @@ export default function Home() {
           src="https://lh3.googleusercontent.com/aida-public/AB6AXuCP9CYlLsY4qhILS55j6QohRqbL2FSzpoB3CuhU78z-9ULt_tJBtx1Nec7gGvK4YMifpBusY_lDmMl1mFCZzuGiqd761A3TsUuo0vqJGrROfvTBLa9vJsGSo87XAanY03gKO-RcslYYqjCfXe9zRNV38Qfyvy1DQSptLmOQTU5XD0NgE-F024Xreij-CCmBXTItHAIt8I1QXh45KNpxxqJ8uTpArBBz10iK5O6zBBvyBSQKCT_jvkUtdbwWOeHL0UNoteGSXxs_ggRW"
         />
         <div className="absolute inset-0 hero-overlay z-10 pointer-events-none"></div>
+        <div aria-hidden="true" className="absolute inset-0 z-10 grain pointer-events-none"></div>
         <div className="relative z-20 w-full max-w-container-max mx-auto px-grid-margin pt-20">
           <motion.div 
             variants={containerVariants}
@@ -57,8 +59,8 @@ export default function Home() {
             animate="visible"
             className="max-w-2xl text-on-primary"
           >
-            <motion.span variants={itemVariants} className="inline-block font-label-md text-label-md uppercase tracking-[0.2em] text-secondary-fixed mb-5">
-              Bulk Uniforms · Direct from the Source
+            <motion.span variants={itemVariants} className="inline-flex items-center gap-2 font-label-md text-label-md uppercase tracking-[0.2em] text-gold mb-5">
+              <span className="h-px w-8 bg-gold" /> Bulk Uniforms · Direct from the Source
             </motion.span>
             <motion.h1 variants={itemVariants} className="font-display-lg-mobile text-display-lg-mobile md:font-display-lg md:text-display-lg text-on-primary mb-6 tracking-tight">
               Your one-stop shop for bulk Caribbean uniforms.
@@ -76,6 +78,18 @@ export default function Home() {
             </motion.div>
           </motion.div>
         </div>
+        {/* Scroll cue */}
+        <motion.div
+          aria-hidden="true"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.2 }}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 text-on-primary/70"
+        >
+          <motion.div animate={reduce ? undefined : { y: [0, 8, 0] }} transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}>
+            <ChevronDown className="h-6 w-6" />
+          </motion.div>
+        </motion.div>
       </section>
 
       {/* Trust Badges Bar */}
@@ -87,24 +101,26 @@ export default function Home() {
         className="w-full bg-surface-container-low py-8 border-b border-surface-variant dark:border-zinc-800 dark:bg-zinc-900 transition-colors duration-500"
       >
         <div className="max-w-container-max mx-auto px-grid-margin flex flex-wrap justify-center md:justify-between items-center gap-6">
-          <div className="flex items-center gap-2 text-on-surface-variant font-label-md text-label-md hover:text-primary transition-colors cursor-pointer"><span className="material-symbols-outlined text-on-primary-fixed dark:text-primary-fixed">local_shipping</span> Fast Caribbean Delivery</div>
-          <div className="flex items-center gap-2 text-on-surface-variant font-label-md text-label-md hover:text-primary transition-colors cursor-pointer"><span className="material-symbols-outlined text-on-primary-fixed dark:text-primary-fixed">inventory_2</span> Bulk Orders</div>
-          <div className="flex items-center gap-2 text-on-surface-variant font-label-md text-label-md hover:text-primary transition-colors cursor-pointer"><span className="material-symbols-outlined text-on-primary-fixed dark:text-primary-fixed">styler</span> Logo Embroidery</div>
-          <div className="flex items-center gap-2 text-on-surface-variant font-label-md text-label-md hover:text-primary transition-colors cursor-pointer"><span className="material-symbols-outlined text-on-primary-fixed dark:text-primary-fixed">straighten</span> Custom Sizing</div>
-          <div className="flex items-center gap-2 text-on-surface-variant font-label-md text-label-md hover:text-primary transition-colors cursor-pointer"><span className="material-symbols-outlined text-on-primary-fixed dark:text-primary-fixed">texture</span> Quality Fabrics</div>
+          <div className="flex items-center gap-2 text-on-surface-variant font-label-md text-label-md hover:text-primary transition-colors cursor-pointer"><Truck className="text-on-primary-fixed dark:text-primary-fixed h-5 w-5" /> Fast Caribbean Delivery</div>
+          <div className="flex items-center gap-2 text-on-surface-variant font-label-md text-label-md hover:text-primary transition-colors cursor-pointer"><Package className="text-on-primary-fixed dark:text-primary-fixed h-5 w-5" /> Bulk Orders</div>
+          <div className="flex items-center gap-2 text-on-surface-variant font-label-md text-label-md hover:text-primary transition-colors cursor-pointer"><Sparkles className="text-on-primary-fixed dark:text-primary-fixed h-5 w-5" /> Logo Embroidery</div>
+          <div className="flex items-center gap-2 text-on-surface-variant font-label-md text-label-md hover:text-primary transition-colors cursor-pointer"><Ruler className="text-on-primary-fixed dark:text-primary-fixed h-5 w-5" /> Custom Sizing</div>
+          <div className="flex items-center gap-2 text-on-surface-variant font-label-md text-label-md hover:text-primary transition-colors cursor-pointer"><Layers className="text-on-primary-fixed dark:text-primary-fixed h-5 w-5" /> Quality Fabrics</div>
         </div>
       </motion.section>
 
       {/* Why CaribVestio — USP */}
-      <section className="w-full bg-surface-container-low py-section-gap-mobile md:py-section-gap-desktop transition-colors duration-500">
-        <div className="max-w-container-max mx-auto px-grid-margin">
+      <section className="relative w-full overflow-hidden bg-surface-container-low py-section-gap-mobile md:py-section-gap-desktop transition-colors duration-500">
+        <LogoIcon className="pointer-events-none absolute -right-16 -bottom-16 h-80 w-80 text-on-primary-fixed/[0.04] dark:text-white/[0.04]" />
+        <div aria-hidden="true" className="absolute inset-0 grain pointer-events-none" />
+        <div className="relative max-w-container-max mx-auto px-grid-margin">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="text-center mb-14 max-w-2xl mx-auto"
           >
-            <span className="font-label-md text-label-md uppercase tracking-[0.2em] text-on-tertiary-container">Why CaribVestio</span>
+            <span className="font-label-md text-label-md uppercase tracking-[0.2em] text-gold-dim dark:text-gold">Why CaribVestio</span>
             <h2 className="font-headline-xl-mobile md:font-headline-xl text-headline-xl-mobile md:text-headline-xl text-primary dark:text-on-primary mt-3 mb-4 tracking-tight">One source. No middlemen.</h2>
             <p className="font-body-md text-body-md text-on-surface-variant">
               We're your single point of contact for bulk uniforms — sourcing directly from vetted manufacturers and coordinating every step so you get the right kit at the right price.
@@ -281,7 +297,7 @@ export default function Home() {
           transition={{ duration: 0.6 }}
           className="bg-surface-container-low rounded-3xl p-10 md:p-16 text-center shadow-card"
         >
-          <span className="material-symbols-outlined text-on-tertiary-container text-4xl mb-4">format_quote</span>
+          <Quote className="text-gold h-9 w-9 mb-4 inline-block" />
           <blockquote className="font-headline-md text-2xl md:text-3xl leading-snug text-primary dark:text-on-primary max-w-3xl mx-auto mb-8">
             “CaribVestio outfitted all four of our resort properties in under six weeks. The fit, the fabric for our climate, the embroidery — every detail was on point.”
           </blockquote>

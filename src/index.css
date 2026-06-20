@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600&family=Playfair+Display:wght@600;700&display=swap');
 
 @tailwind base;
@@ -98,6 +97,32 @@
   }
   .hero-overlay {
     background: radial-gradient(circle at center, rgba(19, 27, 46, 0.4) 0%, rgba(19, 27, 46, 0.85) 100%);
+  }
+  /* Subtle film-grain overlay (place on an absolutely-positioned, aria-hidden div) */
+  .grain {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.045;
+  }
+  .dark .grain {
+    opacity: 0.07;
+  }
+  /* Cohesive navy tint for photography (place on an absolutely-positioned overlay div) */
+  .photo-tint {
+    background: linear-gradient(180deg, rgba(19, 27, 46, 0.12) 0%, rgba(19, 27, 46, 0.32) 100%);
+    mix-blend-mode: multiply;
+  }
+  /* Animated gold underline that grows on hover/focus */
+  .link-underline {
+    background-image: linear-gradient(theme('colors.gold'), theme('colors.gold'));
+    background-size: 0% 2px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.3s ease;
+    padding-bottom: 2px;
+  }
+  .link-underline:hover,
+  .link-underline:focus-visible {
+    background-size: 100% 2px;
   }
 }
 

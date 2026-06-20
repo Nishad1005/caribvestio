@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { CheckCircle2 } from 'lucide-react';
 
 export default function Login() {
   const [form, setForm] = useState({ email: '', password: '', remember: false });
@@ -63,7 +64,7 @@ export default function Login() {
               role="status"
               className="rounded-lg border border-on-tertiary-container/30 bg-tertiary-fixed/30 p-6 text-center space-y-3"
             >
-              <span className="material-symbols-outlined text-on-tertiary-container text-4xl">check_circle</span>
+              <CheckCircle2 className="text-on-tertiary-container h-6 w-6" />
               <h2 className="font-headline-md text-2xl text-primary">You're signed in</h2>
               <p className="font-body-md text-body-md text-secondary">
                 Welcome back! This is a demo — connect an auth backend to redirect to your portal.

@@ -136,7 +136,8 @@ const Card = ({ data, showCarousel = true, cardsPerView = 3 }: CardProps) => {
                     loading="lazy"
                     className="absolute inset-0 h-full w-full object-cover transition-transform duration-[800ms] ease-out group-hover:scale-110"
                   />
-                  {/* Legibility scrim + always-visible title */}
+                  {/* Cohesive brand tint + legibility scrim */}
+                  <div aria-hidden className="absolute inset-0 photo-tint" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
                   <div className="absolute inset-x-0 bottom-0 p-6">
                     <h3 className="font-headline-md text-2xl leading-tight tracking-tight text-white">

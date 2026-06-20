@@ -1,3 +1,5 @@
+import { ArrowRight } from 'lucide-react';
+
 export default function BulkOrders() {
   return (
     <>
@@ -15,7 +17,7 @@ export default function BulkOrders() {
 <div className="flex flex-col sm:flex-row gap-4">
 <a className="bg-primary text-on-primary px-8 py-4 rounded-DEFAULT font-label-md text-label-md hover:bg-surface-tint transition-colors duration-300 inline-flex items-center justify-center gap-2" href="#quote-form">
                         Get Bulk Quote
-                        <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
+                        <ArrowRight className="h-4 w-4" />
 </a>
 <a className="bg-transparent border border-on-primary text-on-primary px-8 py-4 rounded-DEFAULT font-label-md text-label-md hover:bg-surface-variant hover:text-primary transition-colors duration-300 inline-flex items-center justify-center" href="#process">
                         View Process

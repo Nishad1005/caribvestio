@@ -1,3 +1,5 @@
+import { ChevronDown, ArrowUpRight } from 'lucide-react';
+
 export default function HospitalityCollection() {
   return (
     <>
@@ -30,12 +32,12 @@ export default function HospitalityCollection() {
 <div className="flex gap-4 w-full md:w-auto justify-end">
 <div className="relative group">
 <button className="flex items-center gap-2 text-primary font-label-md text-label-md hover:opacity-80">
-                            Fabric Type <span className="material-symbols-outlined text-sm">expand_more</span>
+                            Fabric Type <ChevronDown className="h-4 w-4" />
 </button>
 </div>
 <div className="relative group">
 <button className="flex items-center gap-2 text-primary font-label-md text-label-md hover:opacity-80">
-                            Style <span className="material-symbols-outlined text-sm">expand_more</span>
+                            Style <ChevronDown className="h-4 w-4" />
 </button>
 </div>
 </div>
@@ -62,7 +64,7 @@ export default function HospitalityCollection() {
 <div>
 <div className="flex justify-between items-start mb-2">
 <h3 className="font-body-lg text-body-lg text-primary font-semibold">Canvas Crossback Apron</h3>
-<span className="material-symbols-outlined text-outline">arrow_outward</span>
+<ArrowUpRight className="text-outline h-5 w-5" />
 </div>
 <p className="font-body-md text-body-md text-secondary">Food &amp; Beverage • Heavy Cotton</p>
 </div>
@@ -75,7 +77,7 @@ export default function HospitalityCollection() {
 <div>
 <div className="flex justify-between items-start mb-2">
 <h3 className="font-body-lg text-body-lg text-primary font-semibold">Tranquil Wrap Tunic</h3>
-<span className="material-symbols-outlined text-outline">arrow_outward</span>
+<ArrowUpRight className="text-outline h-5 w-5" />
 </div>
 <p className="font-body-md text-body-md text-secondary">Spa • Bamboo Linen Blend</p>
 </div>

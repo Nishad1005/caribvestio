@@ -1,3 +1,5 @@
+import { Check, UploadCloud, ReceiptText, ChevronDown } from 'lucide-react';
+
 export default function TheExecutiveSuite() {
   return (
     <>
@@ -42,7 +44,7 @@ export default function TheExecutiveSuite() {
 <h3 className="font-label-md text-label-md text-primary mb-3">Embroidery Position</h3>
 <div className="grid grid-cols-2 gap-3">
 <button className="px-4 py-3 border border-primary text-primary font-body-md text-body-md rounded-DEFAULT flex justify-between items-center bg-surface-container-low">
-                                Left Chest <span className="material-symbols-outlined text-sm">check</span>
+                                Left Chest <Check className="h-4 w-4" />
 </button>
 <button className="px-4 py-3 border border-outline-variant text-secondary font-body-md text-body-md rounded-DEFAULT hover:border-outline transition-colors">
                                 Sleeve
@@ -52,7 +54,7 @@ export default function TheExecutiveSuite() {
 <div>
 <h3 className="font-label-md text-label-md text-primary mb-3">Company Logo</h3>
 <div className="border-2 border-dashed border-outline-variant rounded-lg p-6 flex flex-col items-center justify-center text-center hover:bg-surface-container-low transition-colors cursor-pointer group">
-<span className="material-symbols-outlined text-outline mb-2 group-hover:text-primary transition-colors">cloud_upload</span>
+<UploadCloud className="text-outline mb-2 group-hover:text-primary transition-colors h-6 w-6" />
 <span className="font-body-md text-body-md text-secondary group-hover:text-primary transition-colors">Upload vector file (.ai, .eps, .svg)</span>
 </div>
 </div>
@@ -61,7 +63,7 @@ export default function TheExecutiveSuite() {
 {/* Actions */}
 <div className="flex flex-col gap-4">
 <button className="w-full py-4 bg-primary-container text-on-primary font-label-md text-label-md rounded-DEFAULT hover:bg-surface-tint transition-all duration-300 flex items-center justify-center gap-2">
-<span className="material-symbols-outlined" style={{}} /* Fix manually if needed */>request_quote</span>
+<ReceiptText className="h-5 w-5" />
                         Request Bulk Quote for this Item
                     </button>
 <button className="w-full py-4 bg-transparent border border-primary-container text-primary-container font-label-md text-label-md rounded-DEFAULT hover:bg-surface-container transition-all duration-300">
@@ -73,7 +75,7 @@ export default function TheExecutiveSuite() {
 <details className="group border-b border-outline-variant pb-4" open="">
 <summary className="flex justify-between items-center font-label-md text-label-md text-primary cursor-pointer list-none">
                             Specifications
-                            <span className="material-symbols-outlined group-open:rotate-180 transition-transform">expand_more</span>
+                            <ChevronDown className="group-open:rotate-180 transition-transform h-5 w-5" />
 </summary>
 <div className="pt-4 font-body-md text-body-md text-on-surface-variant space-y-2">
 <p><strong>Fabric Blend:</strong> 60% Lightweight Tropical Wool, 38% Recycled Polyester, 2% Elastane.</p>

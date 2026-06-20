@@ -67,7 +67,7 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
 											{group.links.map((link) => {
 												const internal = link.href.startsWith('/');
 												const cls =
-													'hover:text-primary dark:hover:text-on-primary inline-flex items-center transition-all duration-300';
+													'link-underline hover:text-primary dark:hover:text-on-primary inline-flex items-center transition-all duration-300';
 												return (
 													<li key={link.title}>
 														{internal ? (

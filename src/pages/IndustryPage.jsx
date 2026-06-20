@@ -20,15 +20,16 @@ export default function IndustryPage() {
           alt={`${industry.title} uniforms`}
           className="absolute inset-0 w-full h-full object-cover"
         />
+        <div aria-hidden className="absolute inset-0 photo-tint" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/20" />
         <div className="relative z-10 w-full max-w-container-max mx-auto px-grid-margin pb-12 md:pb-16">
           <motion.p
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="font-label-md text-label-md uppercase tracking-[0.2em] text-secondary-fixed mb-4"
+            className="inline-flex items-center gap-2 font-label-md text-label-md uppercase tracking-[0.2em] text-gold mb-4"
           >
-            Industry Solutions
+            <span className="h-px w-8 bg-gold" /> Industry Solutions
           </motion.p>
           <motion.h1
             initial={{ opacity: 0, y: 16 }}
