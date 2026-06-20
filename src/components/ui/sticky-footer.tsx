@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { motion, useReducedMotion } from 'motion/react';
 import {
@@ -63,17 +64,26 @@ export function StickyFooter({ className, ...props }: StickyFooterProps) {
 									<div className="mb-10 md:mb-0">
 										<h3 className="text-sm font-label-lg uppercase tracking-wider text-primary dark:text-on-primary">{group.label}</h3>
 										<ul className="text-on-surface-variant mt-4 space-y-3 text-sm md:text-sm lg:text-sm">
-											{group.links.map((link) => (
-												<li key={link.title}>
-													<a
-														href={link.href}
-														className="hover:text-primary dark:hover:text-on-primary inline-flex items-center transition-all duration-300"
-													>
-														{link.icon && <link.icon className="me-2 size-4" />}
-														{link.title}
-													</a>
-												</li>
-											))}
+											{group.links.map((link) => {
+												const internal = link.href.startsWith('/');
+												const cls =
+													'hover:text-primary dark:hover:text-on-primary inline-flex items-center transition-all duration-300';
+												return (
+													<li key={link.title}>
+														{internal ? (
+															<Link to={link.href} className={cls}>
+																{link.icon && <link.icon className="me-2 size-4" />}
+																{link.title}
+															</Link>
+														) : (
+															<a href={link.href} className={cls}>
+																{link.icon && <link.icon className="me-2 size-4" />}
+																{link.title}
+															</a>
+														)}
+													</li>
+												);
+											})}
 										</ul>
 									</div>
 								</AnimatedContainer>
@@ -112,9 +122,9 @@ const footerLinkGroups: FooterLinkGroup[] = [
 		label: 'Services',
 		links: [
 			{ title: 'Bulk Orders', href: '/bulk-orders' },
-			{ title: 'Custom Sizing', href: '#' },
-			{ title: 'Logo Embroidery', href: '#' },
-			{ title: 'Fast Delivery', href: '#' },
+			{ title: 'Custom Sizing', href: '/bulk-orders' },
+			{ title: 'Logo Embroidery', href: '/bulk-orders' },
+			{ title: 'Fast Delivery', href: '/bulk-orders' },
 		],
 	},
 	{
@@ -123,8 +133,8 @@ const footerLinkGroups: FooterLinkGroup[] = [
 			{ title: 'About Us', href: '/about' },
 			{ title: 'Contact', href: '/contact' },
 			{ title: 'Uniform Guide Blog', href: '/blog' },
-			{ title: 'Careers', href: '#' },
-			{ title: 'Privacy Policy', href: '#' },
+			{ title: 'Careers', href: '/contact' },
+			{ title: 'Privacy Policy', href: '/privacy' },
 		],
 	},
 ];
