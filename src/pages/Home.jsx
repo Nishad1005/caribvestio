@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import IndustryCarousel from '@/components/ui/carousel-card';
 
 export default function Home() {
   const containerVariants = {
@@ -73,45 +74,34 @@ export default function Home() {
         </div>
       </motion.section>
 
-      {/* Category Grid */}
-      <section className="py-section-gap-mobile md:py-section-gap-desktop max-w-container-max mx-auto px-grid-margin overflow-hidden">
-        <motion.div 
+      {/* Category Grid — full-bleed carousel */}
+      <section className="py-section-gap-mobile md:py-section-gap-desktop w-full overflow-hidden">
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-16 max-w-container-max mx-auto px-grid-margin"
         >
           <h2 className="font-headline-xl-mobile md:font-headline-xl text-headline-xl-mobile md:text-headline-xl text-primary dark:text-zinc-100 mb-4 tracking-tight">Uniform Solutions by Industry</h2>
           <p className="font-body-md text-body-md text-on-surface-variant dark:text-zinc-400 max-w-2xl mx-auto">Tailored professional wear designed for the specific demands of your sector, combining functional design with sophisticated aesthetics.</p>
         </motion.div>
-        
-        <motion.div 
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-grid-gutter"
+          transition={{ duration: 0.6 }}
+          className="px-grid-margin md:px-8"
         >
-          {/* Categories */}
-          {[
-            { title: 'Hospitality', link: '/hospitality-collection', img: "https://lh3.googleusercontent.com/aida-public/AB6AXuAFezUSMmI0WB6OAxOqWip_K1JccFT6AxpzIGRBhJ5O3FzPn_LXyfwCpEDpiNAPg9iWNwUPFV6QxSZRcAunJu3P_V0uGSrxOGbptNlWqgrV1zYRFjj-piw2QGzdZaCUUCoMUAgW015WOCOJJDRIBsmgRjKfiaINu2D3z-wh-_ovb6qu8qrIWIXmDAGvHpOwRTbDzy_b5XBk3GAvpDjLDJd3iyDPTu2I6YNut68VkltmVf1VqlblYxzgGsIwqOC0e3aYeWSxjoCo35xT" },
-            { title: 'Healthcare', link: '/collections', img: "https://lh3.googleusercontent.com/aida-public/AB6AXuBMyBUvam58tPXrEuxNswq-8SgbExxSKvfJTlMbDWxMrqX_v7iXUN6rUFjOPUoQva9FXKj7QcbC2GM1uJmy7Ma5PLB3SNmzvufz-pMo2eDmGrY8Htqf8UTn4pItkR1vU7elwtvaBNRaLrqNp9Z3bmQUCF3SGlde2iJFm6-ehWsKnuFlMKJOQYdT8FkoSSDZST4j9sbYDFlyh-i8ItHp7nXearvbwcVza3kBzfAs-WobmSKxrTRKru227d1dv16jeJrRz6RGqqQ8xW9r" },
-            { title: 'Corporate', link: '/executive-suite', img: "https://lh3.googleusercontent.com/aida-public/AB6AXuBOwfUxbOLGiaU4yJAjZaCBTFZtJWGBuQsIvVVT6ThXONOT-St7fvDdVEnwrO8PUUFD7kNG_VuXjKwyrcJLi-nug9gD0zIr85IIvKJU8X_UNa2E4OnlqTGDnB64fDO4e36dlZbF1vRv7lpfTo0FIBieWPKAoJlaW6sI0dWal60_jzQCfSWedZeDkJhZJEfGiy6oaf_BEA6WVgVtiIOVP5gnMcNI12vDHl9NLTINz45TMFvbgbJsjfaPh2T7LyWjVCsnBsF8_XuMl_wC" },
-            { title: 'Industrial', link: '/collections', img: "https://lh3.googleusercontent.com/aida-public/AB6AXuBsPgRNfVgfsggQA_oOmjsJ7Z3vX7D_4gYucoUOalxUbDNEkZi4ZPfc9wruI2zBE-PcjGc-clGCiH2_op8xySosTLnkhG6JuWWP3i6n8FbsoFVBgczWjAzJPj5wRQDzAXhKfl-IGklb7T6ceR7OtMRWAStjRKyR64BJ6GcuZhz8DKGjx0chMifXwRyEfEpYt_r-GXjxIBWKl6TB9qRWRYypy907a0nNVA6qXkHJGAnRMKgbmD2L9G6idntWLpocnG9NlU3l-DSTPVu-" }
-          ].map((cat, i) => (
-            <motion.div variants={itemVariants} key={i}>
-              <Link to={cat.link} className="group relative rounded-2xl overflow-hidden aspect-[4/5] ambient-shadow bg-surface-container-lowest dark:bg-zinc-900 block cursor-pointer">
-                <img alt={cat.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src={cat.img}/>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <div className="absolute bottom-0 left-0 w-full p-6">
-                  <h3 className="font-headline-md text-headline-md text-on-primary mb-1 transform group-hover:-translate-y-1 transition-transform duration-300">{cat.title}</h3>
-                  <span className="text-secondary-fixed flex items-center gap-1 font-label-md text-label-md opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
-                    Explore <span className="material-symbols-outlined text-sm">arrow_forward</span>
-                  </span>
-                </div>
-              </Link>
-            </motion.div>
-          ))}
+          <IndustryCarousel
+            cardsPerView={3}
+            data={[
+              { id: 1, title: 'Hospitality', href: '/hospitality-collection', content: 'Sharp, climate-ready uniforms for resorts, hotels and restaurants — front-desk blazers, chef coats and server attire.', imgUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuAFezUSMmI0WB6OAxOqWip_K1JccFT6AxpzIGRBhJ5O3FzPn_LXyfwCpEDpiNAPg9iWNwUPFV6QxSZRcAunJu3P_V0uGSrxOGbptNlWqgrV1zYRFjj-piw2QGzdZaCUUCoMUAgW015WOCOJJDRIBsmgRjKfiaINu2D3z-wh-_ovb6qu8qrIWIXmDAGvHpOwRTbDzy_b5XBk3GAvpDjLDJd3iyDPTu2I6YNut68VkltmVf1VqlblYxzgGsIwqOC0e3aYeWSxjoCo35xT" },
+              { id: 2, title: 'Healthcare', href: '/collections', content: 'Comfortable, durable scrubs and clinical wear engineered for long shifts and easy care.', imgUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuBMyBUvam58tPXrEuxNswq-8SgbExxSKvfJTlMbDWxMrqX_v7iXUN6rUFjOPUoQva9FXKj7QcbC2GM1uJmy7Ma5PLB3SNmzvufz-pMo2eDmGrY8Htqf8UTn4pItkR1vU7elwtvaBNRaLrqNp9Z3bmQUCF3SGlde2iJFm6-ehWsKnuFlMKJOQYdT8FkoSSDZST4j9sbYDFlyh-i8ItHp7nXearvbwcVza3kBzfAs-WobmSKxrTRKru227d1dv16jeJrRz6RGqqQ8xW9r" },
+              { id: 3, title: 'Corporate', href: '/executive-suite', content: 'Tailored executive and office attire that projects a polished, unified brand image.', imgUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuBOwfUxbOLGiaU4yJAjZaCBTFZtJWGBuQsIvVVT6ThXONOT-St7fvDdVEnwrO8PUUFD7kNG_VuXjKwyrcJLi-nug9gD0zIr85IIvKJU8X_UNa2E4OnlqTGDnB64fDO4e36dlZbF1vRv7lpfTo0FIBieWPKAoJlaW6sI0dWal60_jzQCfSWedZeDkJhZJEfGiy6oaf_BEA6WVgVtiIOVP5gnMcNI12vDHl9NLTINz45TMFvbgbJsjfaPh2T7LyWjVCsnBsF8_XuMl_wC" },
+              { id: 4, title: 'Industrial', href: '/collections', content: 'High-visibility, safety-compliant workwear built to withstand demanding job sites.', imgUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuBsPgRNfVgfsggQA_oOmjsJ7Z3vX7D_4gYucoUOalxUbDNEkZi4ZPfc9wruI2zBE-PcjGc-clGCiH2_op8xySosTLnkhG6JuWWP3i6n8FbsoFVBgczWjAzJPj5wRQDzAXhKfl-IGklb7T6ceR7OtMRWAStjRKyR64BJ6GcuZhz8DKGjx0chMifXwRyEfEpYt_r-GXjxIBWKl6TB9qRWRYypy907a0nNVA6qXkHJGAnRMKgbmD2L9G6idntWLpocnG9NlU3l-DSTPVu-" }
+            ]}
+          />
         </motion.div>
       </section>
 
@@ -152,7 +142,7 @@ export default function Home() {
       </section>
 
       {/* Social Proof: Stats */}
-      <section className="py-section-gap-mobile md:py-section-gap-desktop max-w-container-max mx-auto px-grid-margin">
+      <section className="py-section-gap-mobile md:py-section-gap-desktop w-full max-w-container-max mx-auto px-grid-margin">
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -175,7 +165,7 @@ export default function Home() {
       </section>
 
       {/* Social Proof: Testimonial */}
-      <section className="pb-section-gap-mobile md:pb-section-gap-desktop max-w-container-max mx-auto px-grid-margin">
+      <section className="pb-section-gap-mobile md:pb-section-gap-desktop w-full max-w-container-max mx-auto px-grid-margin">
         <motion.figure
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -194,7 +184,7 @@ export default function Home() {
       </section>
 
       {/* Social Proof: Trusted-by sectors */}
-      <section className="pb-section-gap-mobile md:pb-section-gap-desktop max-w-container-max mx-auto px-grid-margin">
+      <section className="pb-section-gap-mobile md:pb-section-gap-desktop w-full max-w-container-max mx-auto px-grid-margin">
         <p className="text-center font-label-md text-label-md uppercase tracking-[0.2em] text-on-surface-variant mb-8">
           Trusted by teams across the Caribbean
         </p>
@@ -208,7 +198,7 @@ export default function Home() {
       </section>
 
       {/* Final CTA */}
-      <section className="py-section-gap-mobile md:py-section-gap-desktop max-w-container-max mx-auto px-grid-margin">
+      <section className="py-section-gap-mobile md:py-section-gap-desktop w-full max-w-container-max mx-auto px-grid-margin">
         <motion.div 
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
