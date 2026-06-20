@@ -99,13 +99,13 @@ const socialLinks = [
 
 const footerLinkGroups: FooterLinkGroup[] = [
 	{
-		label: 'Collections',
+		label: 'Industries',
 		links: [
-			{ title: 'Hospitality', href: '/hospitality-collection' },
-			{ title: 'Executive Suite', href: '/executive-suite' },
-			{ title: 'Healthcare', href: '/collections' },
-			{ title: 'Industrial', href: '/collections' },
-			{ title: 'All Uniforms', href: '/collections' },
+			{ title: 'Security', href: '/industries/security' },
+			{ title: 'Hospitality', href: '/industries/hospitality' },
+			{ title: 'Healthcare', href: '/industries/healthcare' },
+			{ title: 'Schools', href: '/industries/schools' },
+			{ title: 'Corporate', href: '/industries/corporate' },
 		],
 	},
 	{

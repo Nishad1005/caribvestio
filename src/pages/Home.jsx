@@ -1,7 +1,8 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ClipboardList, FileText, CheckCircle2, Truck, ChevronRight } from 'lucide-react';
+import { ClipboardList, FileText, CheckCircle2, Truck, ChevronRight, Factory, Scale, HandCoins, Scissors, Globe } from 'lucide-react';
 import IndustryCarousel from '@/components/ui/carousel-card';
+import { industries } from '@/data/industries';
 
 export default function Home() {
   const containerVariants = {
@@ -22,10 +23,18 @@ export default function Home() {
   // Each step's icon performs a one-time gesture on scroll-in (and on hover)
   // that echoes the action: submit lifts, quote tilts, approve pops, delivery drives.
   const steps = [
-    { icon: ClipboardList, title: 'Submit Requirement', desc: 'Share your team size, industry, and specific uniform needs through our simple online portal.', gesture: { y: [0, -6, 0] }, hover: { y: -4 } },
-    { icon: FileText, title: 'Get a Quote', desc: 'Receive a detailed, transparent proposal including customization options and timeline within 48 hours.', gesture: { rotate: [0, -8, 0] }, hover: { rotate: -6 }, badge: '48h' },
-    { icon: CheckCircle2, title: 'Approve Sample', desc: 'Review physical or digital samples to ensure fabric quality, fit, and logo placement meet your standards.', gesture: { scale: [1, 1.2, 1] }, hover: { scale: 1.12 } },
-    { icon: Truck, title: 'Production & Delivery', desc: 'We manufacture your uniforms with precision and deliver them directly to your location anywhere in the Caribbean.', gesture: { x: [0, 8, 0] }, hover: { x: 5 }, ambient: { x: [0, 4, 0] } },
+    { icon: ClipboardList, title: 'Submit Requirement', desc: 'Tell us your team size, industry, items, and any tailor-made needs through our simple portal.', gesture: { y: [0, -6, 0] }, hover: { y: -4 } },
+    { icon: FileText, title: 'Compare Supplier Quotes', desc: 'We gather quotes from multiple direct manufacturers so you can compare price and lead time — no middleman markup.', gesture: { rotate: [0, -8, 0] }, hover: { rotate: -6 }, badge: '48h' },
+    { icon: CheckCircle2, title: 'Approve & Pay Direct', desc: 'Review the sample for quality, fit and logo placement, then pay the manufacturer directly.', gesture: { scale: [1, 1.2, 1] }, hover: { scale: 1.12 } },
+    { icon: Truck, title: 'Production & Delivery', desc: 'Production is coordinated by our ground teams in the Caribbean and India and delivered to your door.', gesture: { x: [0, 8, 0] }, hover: { x: 5 }, ambient: { x: [0, 4, 0] } },
+  ];
+
+  const usps = [
+    { icon: Factory, title: 'Direct from manufacturers', desc: 'You buy straight from the makers — never middlemen.', gesture: { y: [0, -5, 0] }, hover: { y: -3 } },
+    { icon: Scale, title: 'Compare multiple quotes', desc: 'Quotes from several suppliers, side by side, to choose from.', gesture: { rotate: [0, -10, 10, 0] }, hover: { rotate: -8 } },
+    { icon: HandCoins, title: 'Pay the maker directly', desc: 'Transparent pricing with payment direct to the manufacturer.', gesture: { y: [0, -4, 0] }, hover: { y: -3 } },
+    { icon: Scissors, title: 'Tailor-made options', desc: 'Custom specifications accommodated wherever possible.', gesture: { rotate: [0, -14, 0] }, hover: { rotate: -12 } },
+    { icon: Globe, title: 'Caribbean & India teams', desc: 'On-the-ground contacts coordinate every order end-to-end.', gesture: { rotate: [0, 360] }, hover: { rotate: 20 } },
   ];
 
   return (
@@ -49,13 +58,13 @@ export default function Home() {
             className="max-w-2xl text-on-primary"
           >
             <motion.span variants={itemVariants} className="inline-block font-label-md text-label-md uppercase tracking-[0.2em] text-secondary-fixed mb-5">
-              Caribbean Corporate Uniforms
+              Bulk Uniforms · Direct from the Source
             </motion.span>
             <motion.h1 variants={itemVariants} className="font-display-lg-mobile text-display-lg-mobile md:font-display-lg md:text-display-lg text-on-primary mb-6 tracking-tight">
-              Uniforms that mean business.
+              Your one-stop shop for bulk Caribbean uniforms.
             </motion.h1>
             <motion.p variants={itemVariants} className="font-body-lg text-body-lg mb-10 text-on-primary/90 max-w-xl">
-              Premium corporate wear designed for the climate, crafted for durability, and styled to elevate your brand's professional image across the Caribbean.
+              We connect you directly to vetted manufacturers — no middlemen. Compare quotes from multiple suppliers, pay the maker direct, and get tailor-made uniforms coordinated end-to-end across the Caribbean and India.
             </motion.p>
             <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4">
               <Link to="/bulk-orders" className="btn btn-accent">
@@ -86,6 +95,54 @@ export default function Home() {
         </div>
       </motion.section>
 
+      {/* Why CaribVestio — USP */}
+      <section className="w-full bg-surface-container-low py-section-gap-mobile md:py-section-gap-desktop transition-colors duration-500">
+        <div className="max-w-container-max mx-auto px-grid-margin">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-14 max-w-2xl mx-auto"
+          >
+            <span className="font-label-md text-label-md uppercase tracking-[0.2em] text-on-tertiary-container">Why CaribVestio</span>
+            <h2 className="font-headline-xl-mobile md:font-headline-xl text-headline-xl-mobile md:text-headline-xl text-primary dark:text-on-primary mt-3 mb-4 tracking-tight">One source. No middlemen.</h2>
+            <p className="font-body-md text-body-md text-on-surface-variant">
+              We're your single point of contact for bulk uniforms — sourcing directly from vetted manufacturers and coordinating every step so you get the right kit at the right price.
+            </p>
+          </motion.div>
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5"
+          >
+            {usps.map((u, i) => {
+              const Icon = u.icon;
+              return (
+                <motion.div
+                  variants={itemVariants}
+                  key={i}
+                  className="group flex flex-col items-start gap-4 rounded-2xl border border-outline-variant bg-surface-container-lowest p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-on-primary-fixed/30 hover:shadow-raised dark:hover:border-zinc-600"
+                >
+                  <motion.span
+                    whileHover={reduce ? undefined : u.hover}
+                    whileInView={reduce ? undefined : u.gesture}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.7, delay: 0.2 + i * 0.1 }}
+                    className="grid place-items-center h-12 w-12 rounded-full bg-on-primary-fixed text-on-primary"
+                  >
+                    <Icon className="h-6 w-6" strokeWidth={1.75} />
+                  </motion.span>
+                  <h3 className="font-headline-md text-lg leading-snug text-primary dark:text-on-primary">{u.title}</h3>
+                  <p className="font-body-sm text-body-sm text-on-surface-variant">{u.desc}</p>
+                </motion.div>
+              );
+            })}
+          </motion.div>
+        </div>
+      </section>
+
       {/* Category Grid — full-bleed carousel */}
       <section className="py-section-gap-mobile md:py-section-gap-desktop w-full overflow-hidden">
         <motion.div
@@ -106,13 +163,14 @@ export default function Home() {
           className="px-grid-margin md:px-8"
         >
           <IndustryCarousel
-            cardsPerView={3}
-            data={[
-              { id: 1, title: 'Hospitality', href: '/hospitality-collection', content: 'Sharp, climate-ready uniforms for resorts, hotels and restaurants — front-desk blazers, chef coats and server attire.', imgUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuAFezUSMmI0WB6OAxOqWip_K1JccFT6AxpzIGRBhJ5O3FzPn_LXyfwCpEDpiNAPg9iWNwUPFV6QxSZRcAunJu3P_V0uGSrxOGbptNlWqgrV1zYRFjj-piw2QGzdZaCUUCoMUAgW015WOCOJJDRIBsmgRjKfiaINu2D3z-wh-_ovb6qu8qrIWIXmDAGvHpOwRTbDzy_b5XBk3GAvpDjLDJd3iyDPTu2I6YNut68VkltmVf1VqlblYxzgGsIwqOC0e3aYeWSxjoCo35xT" },
-              { id: 2, title: 'Healthcare', href: '/collections', content: 'Comfortable, durable scrubs and clinical wear engineered for long shifts and easy care.', imgUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuBMyBUvam58tPXrEuxNswq-8SgbExxSKvfJTlMbDWxMrqX_v7iXUN6rUFjOPUoQva9FXKj7QcbC2GM1uJmy7Ma5PLB3SNmzvufz-pMo2eDmGrY8Htqf8UTn4pItkR1vU7elwtvaBNRaLrqNp9Z3bmQUCF3SGlde2iJFm6-ehWsKnuFlMKJOQYdT8FkoSSDZST4j9sbYDFlyh-i8ItHp7nXearvbwcVza3kBzfAs-WobmSKxrTRKru227d1dv16jeJrRz6RGqqQ8xW9r" },
-              { id: 3, title: 'Corporate', href: '/executive-suite', content: 'Tailored executive and office attire that projects a polished, unified brand image.', imgUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuBOwfUxbOLGiaU4yJAjZaCBTFZtJWGBuQsIvVVT6ThXONOT-St7fvDdVEnwrO8PUUFD7kNG_VuXjKwyrcJLi-nug9gD0zIr85IIvKJU8X_UNa2E4OnlqTGDnB64fDO4e36dlZbF1vRv7lpfTo0FIBieWPKAoJlaW6sI0dWal60_jzQCfSWedZeDkJhZJEfGiy6oaf_BEA6WVgVtiIOVP5gnMcNI12vDHl9NLTINz45TMFvbgbJsjfaPh2T7LyWjVCsnBsF8_XuMl_wC" },
-              { id: 4, title: 'Industrial', href: '/collections', content: 'High-visibility, safety-compliant workwear built to withstand demanding job sites.', imgUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuBsPgRNfVgfsggQA_oOmjsJ7Z3vX7D_4gYucoUOalxUbDNEkZi4ZPfc9wruI2zBE-PcjGc-clGCiH2_op8xySosTLnkhG6JuWWP3i6n8FbsoFVBgczWjAzJPj5wRQDzAXhKfl-IGklb7T6ceR7OtMRWAStjRKyR64BJ6GcuZhz8DKGjx0chMifXwRyEfEpYt_r-GXjxIBWKl6TB9qRWRYypy907a0nNVA6qXkHJGAnRMKgbmD2L9G6idntWLpocnG9NlU3l-DSTPVu-" }
-            ]}
+            cardsPerView={4}
+            data={industries.map((ind) => ({
+              id: ind.slug,
+              title: ind.title,
+              href: `/industries/${ind.slug}`,
+              content: ind.blurb,
+              imgUrl: ind.image,
+            }))}
           />
         </motion.div>
       </section>

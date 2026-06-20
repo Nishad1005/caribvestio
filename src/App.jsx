@@ -14,6 +14,7 @@ const ContactUs = lazy(() => import('./pages/ContactUs'));
 const HospitalityCollection = lazy(() => import('./pages/HospitalityCollection'));
 const Login = lazy(() => import('./pages/Login'));
 const ShopCollections = lazy(() => import('./pages/ShopCollections'));
+const IndustryPage = lazy(() => import('./pages/IndustryPage'));
 const TheExecutiveSuite = lazy(() => import('./pages/TheExecutiveSuite'));
 const UniformGuideBlog = lazy(() => import('./pages/UniformGuideBlog'));
 
@@ -54,6 +55,7 @@ function AnimatedRoutes() {
         <Route path="/login" element={<PageTransition><Login /></PageTransition>} />
         <Route path="/hospitality-collection" element={<PageTransition><HospitalityCollection /></PageTransition>} />
         <Route path="/collections" element={<PageTransition><ShopCollections /></PageTransition>} />
+        <Route path="/industries/:slug" element={<PageTransition><IndustryPage /></PageTransition>} />
         <Route path="/executive-suite" element={<PageTransition><TheExecutiveSuite /></PageTransition>} />
         <Route path="/blog" element={<PageTransition><UniformGuideBlog /></PageTransition>} />
         <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
