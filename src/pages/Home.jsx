@@ -1,5 +1,6 @@
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { ClipboardList, FileText, CheckCircle2, Truck, ChevronRight } from 'lucide-react';
 import IndustryCarousel from '@/components/ui/carousel-card';
 
 export default function Home() {
@@ -15,6 +16,17 @@ export default function Home() {
     hidden: { opacity: 0, y: 30 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
   };
+
+  const reduce = useReducedMotion();
+
+  // Each step's icon performs a one-time gesture on scroll-in (and on hover)
+  // that echoes the action: submit lifts, quote tilts, approve pops, delivery drives.
+  const steps = [
+    { icon: ClipboardList, title: 'Submit Requirement', desc: 'Share your team size, industry, and specific uniform needs through our simple online portal.', gesture: { y: [0, -6, 0] }, hover: { y: -4 } },
+    { icon: FileText, title: 'Get a Quote', desc: 'Receive a detailed, transparent proposal including customization options and timeline within 48 hours.', gesture: { rotate: [0, -8, 0] }, hover: { rotate: -6 }, badge: '48h' },
+    { icon: CheckCircle2, title: 'Approve Sample', desc: 'Review physical or digital samples to ensure fabric quality, fit, and logo placement meet your standards.', gesture: { scale: [1, 1.2, 1] }, hover: { scale: 1.12 } },
+    { icon: Truck, title: 'Production & Delivery', desc: 'We manufacture your uniforms with precision and deliver them directly to your location anywhere in the Caribbean.', gesture: { x: [0, 8, 0] }, hover: { x: 5 }, ambient: { x: [0, 4, 0] } },
+  ];
 
   return (
     <>
@@ -125,18 +137,56 @@ export default function Home() {
             className="grid grid-cols-1 md:grid-cols-4 gap-8"
           >
             {/* Steps */}
-            {[
-              { num: 1, title: 'Submit Requirement', desc: 'Share your team size, industry, and specific uniform needs through our simple online portal.' },
-              { num: 2, title: 'Get a Quote', desc: 'Receive a detailed, transparent proposal including customization options and timeline within 48 hours.' },
-              { num: 3, title: 'Approve Sample', desc: 'Review physical or digital samples to ensure fabric quality, fit, and logo placement meet your standards.' },
-              { num: 4, title: 'Production & Delivery', desc: 'We manufacture your uniforms with precision and deliver them directly to your location anywhere in the Caribbean.' }
-            ].map((step, i) => (
-              <motion.div variants={itemVariants} key={i} className="bg-surface-container-lowest dark:bg-zinc-800 p-8 rounded-2xl ambient-shadow relative hover:-translate-y-2 transition-all duration-300">
-                <div className="w-12 h-12 bg-on-primary-fixed dark:bg-zinc-700 text-on-primary dark:text-zinc-100 rounded-full flex items-center justify-center font-headline-md text-headline-md mb-6">{step.num}</div>
-                <h4 className="font-headline-md text-xl mb-3 text-primary dark:text-zinc-100">{step.title}</h4>
-                <p className="font-body-md text-body-md text-on-surface-variant dark:text-zinc-400">{step.desc}</p>
-              </motion.div>
-            ))}
+            {steps.map((step, i) => {
+              const Icon = step.icon;
+              return (
+                <motion.div variants={itemVariants} key={i} className="group relative bg-surface-container-lowest dark:bg-zinc-800 p-8 rounded-2xl ambient-shadow transition-transform duration-300 hover:-translate-y-2">
+                  {/* Flow connector to the next step (desktop) */}
+                  {i < steps.length - 1 && (
+                    <motion.span
+                      aria-hidden="true"
+                      initial={{ opacity: 0, x: -6 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.35 + i * 0.18, duration: 0.4 }}
+                      className="hidden md:flex absolute top-[2.75rem] -right-8 z-10 h-8 w-8 items-center justify-center rounded-full bg-surface-container-high dark:bg-zinc-700 text-on-primary-fixed dark:text-zinc-200 shadow-sm"
+                    >
+                      <ChevronRight className="h-4 w-4" />
+                    </motion.span>
+                  )}
+                  <div className="relative mb-6 inline-flex">
+                    <motion.div
+                      whileHover={reduce ? undefined : step.hover}
+                      whileInView={reduce || step.ambient ? undefined : step.gesture}
+                      animate={reduce || !step.ambient ? undefined : step.ambient}
+                      viewport={{ once: true }}
+                      transition={
+                        step.ambient
+                          ? { repeat: Infinity, repeatType: 'loop', duration: 1.8, ease: 'easeInOut' }
+                          : { duration: 0.7, delay: 0.25 + i * 0.15 }
+                      }
+                      className="flex h-14 w-14 items-center justify-center rounded-full bg-on-primary-fixed dark:bg-zinc-700 text-on-primary dark:text-zinc-100"
+                    >
+                      <Icon className="h-6 w-6" strokeWidth={1.75} />
+                    </motion.div>
+                    {step.badge && (
+                      <motion.span
+                        initial={{ opacity: 0, scale: 0.5 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.55, type: 'spring', stiffness: 320, damping: 16 }}
+                        className="absolute -top-2 -right-3 rounded-full bg-on-tertiary-container px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide text-white shadow-sm"
+                      >
+                        {step.badge}
+                      </motion.span>
+                    )}
+                  </div>
+                  <p className="font-label-md text-label-md uppercase tracking-wider text-on-tertiary-container mb-2">Step {i + 1}</p>
+                  <h4 className="font-headline-md text-xl mb-3 text-primary dark:text-zinc-100">{step.title}</h4>
+                  <p className="font-body-md text-body-md text-on-surface-variant dark:text-zinc-400">{step.desc}</p>
+                </motion.div>
+              );
+            })}
           </motion.div>
         </div>
       </section>
