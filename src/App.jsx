@@ -1,10 +1,13 @@
 import { lazy, Suspense } from 'react';
-import { BrowserRouter, Routes, Route, useLocation, Link } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation, Link, Navigate } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import { ThemeProvider } from 'next-themes';
 import Layout from './components/Layout';
 import PageTransition from './components/PageTransition';
 import Intro from './components/Intro';
+import RouteMeta from './components/RouteMeta';
+import { QuoteProvider } from './context/QuoteContext';
+import { AuthProvider } from './context/AuthContext';
 
 // Landing page stays eager for fast first paint; the rest are code-split.
 import Home from './pages/Home';
@@ -12,12 +15,12 @@ const About = lazy(() => import('./pages/About'));
 const AuraCaribe = lazy(() => import('./pages/AuraCaribe'));
 const BulkOrders = lazy(() => import('./pages/BulkOrders'));
 const ContactUs = lazy(() => import('./pages/ContactUs'));
-const HospitalityCollection = lazy(() => import('./pages/HospitalityCollection'));
 const Login = lazy(() => import('./pages/Login'));
 const ShopCollections = lazy(() => import('./pages/ShopCollections'));
 const IndustryPage = lazy(() => import('./pages/IndustryPage'));
 const Privacy = lazy(() => import('./pages/Privacy'));
-const TheExecutiveSuite = lazy(() => import('./pages/TheExecutiveSuite'));
+const Quote = lazy(() => import('./pages/Quote'));
+const Portal = lazy(() => import('./pages/Portal'));
 const UniformGuideBlog = lazy(() => import('./pages/UniformGuideBlog'));
 
 function PageFallback() {
@@ -55,11 +58,13 @@ function AnimatedRoutes() {
         <Route path="/bulk-orders" element={<PageTransition><BulkOrders /></PageTransition>} />
         <Route path="/contact" element={<PageTransition><ContactUs /></PageTransition>} />
         <Route path="/login" element={<PageTransition><Login /></PageTransition>} />
-        <Route path="/hospitality-collection" element={<PageTransition><HospitalityCollection /></PageTransition>} />
+        <Route path="/hospitality-collection" element={<Navigate to="/industries/hospitality" replace />} />
         <Route path="/collections" element={<PageTransition><ShopCollections /></PageTransition>} />
         <Route path="/industries/:slug" element={<PageTransition><IndustryPage /></PageTransition>} />
         <Route path="/privacy" element={<PageTransition><Privacy /></PageTransition>} />
-        <Route path="/executive-suite" element={<PageTransition><TheExecutiveSuite /></PageTransition>} />
+        <Route path="/quote" element={<PageTransition><Quote /></PageTransition>} />
+        <Route path="/portal" element={<PageTransition><Portal /></PageTransition>} />
+        <Route path="/executive-suite" element={<Navigate to="/industries/corporate" replace />} />
         <Route path="/blog" element={<PageTransition><UniformGuideBlog /></PageTransition>} />
         <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
       </Routes>
@@ -71,12 +76,17 @@ function AnimatedRoutes() {
 export default function App() {
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-      <Intro />
-      <BrowserRouter>
-        <Layout>
-          <AnimatedRoutes />
-        </Layout>
-      </BrowserRouter>
+      <AuthProvider>
+      <QuoteProvider>
+        <Intro />
+        <BrowserRouter>
+          <RouteMeta />
+          <Layout>
+            <AnimatedRoutes />
+          </Layout>
+        </BrowserRouter>
+      </QuoteProvider>
+      </AuthProvider>
     </ThemeProvider>
   );
 }

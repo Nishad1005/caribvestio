@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#131b2e"/>
+  <!-- soft gold glow -->
+  <circle cx="600" cy="250" r="260" fill="#c8a24c" opacity="0.10"/>
+  <!-- CV monogram -->
+  <g transform="translate(518, 92) scale(1.64)" fill="#ffffff">
+    <path d="M12 22 L39 22 L50 60 L61 22 L88 22 L50 93 Z"/>
+    <path opacity="0.55" fill="#c8a24c" d="M61 22 L91 12 L95 26 L65 34 Z"/>
+  </g>
+  <text x="600" y="395" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="76" font-weight="700" letter-spacing="14" fill="#ffffff">CARIBVESTIO</text>
+  <text x="600" y="450" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700" letter-spacing="8" fill="#c8a24c">UNIFORMS. WORKWEAR. WORLDWIDE.</text>
+  <line x1="540" y1="492" x2="660" y2="492" stroke="#c8a24c" stroke-width="2" opacity="0.7"/>
+  <text x="600" y="548" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="28" fill="#dae2fd">Bulk uniforms for Caribbean businesses · Direct from manufacturers</text>
+</svg>

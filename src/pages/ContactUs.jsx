@@ -151,7 +151,7 @@ export default function ContactUs() {
         </div>
       </div>
 
-      <a aria-label="Chat with us on WhatsApp" className="fixed bottom-20 md:bottom-8 right-4 md:right-8 bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:scale-110 transition-transform duration-300 z-40 flex items-center justify-center" href="#">
+      <a aria-label="Chat with us on WhatsApp" className="fixed bottom-20 md:bottom-8 left-4 md:left-8 bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:scale-110 transition-transform duration-300 z-40 flex items-center justify-center" href="#">
         <MessageCircle className="h-5 w-5" />
       </a>
     </section>

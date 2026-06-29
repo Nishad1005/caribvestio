@@ -1,11 +1,16 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { CheckCircle2 } from 'lucide-react';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { useAuth } from '@/context/AuthContext';
 
 export default function Login() {
+  const { user, signIn } = useAuth();
+  const navigate = useNavigate();
   const [form, setForm] = useState({ email: '', password: '', remember: false });
   const [errors, setErrors] = useState({});
-  const [status, setStatus] = useState('idle'); // idle | submitting | success
+  const [status, setStatus] = useState('idle'); // idle | submitting
+
+  // Already signed in → go straight to the portal.
+  if (user) return <Navigate to="/portal" replace />;
 
   const validate = () => {
     const next = {};
@@ -28,8 +33,11 @@ export default function Login() {
     setErrors(found);
     if (Object.keys(found).length > 0) return;
     setStatus('submitting');
-    // No backend yet — simulate the request so the UX is complete.
-    setTimeout(() => setStatus('success'), 800);
+    // Demo auth: no backend yet — create a local session and enter the portal.
+    setTimeout(() => {
+      signIn(form.email);
+      navigate('/portal');
+    }, 700);
   };
 
   const inputBase =
@@ -59,19 +67,7 @@ export default function Login() {
             <p className="font-body-md text-body-md text-secondary">Sign in to your CaribVestio portal</p>
           </div>
 
-          {status === 'success' ? (
-            <div
-              role="status"
-              className="rounded-lg border border-on-tertiary-container/30 bg-tertiary-fixed/30 p-6 text-center space-y-3"
-            >
-              <CheckCircle2 className="text-on-tertiary-container h-6 w-6" />
-              <h2 className="font-headline-md text-2xl text-primary">You're signed in</h2>
-              <p className="font-body-md text-body-md text-secondary">
-                Welcome back! This is a demo — connect an auth backend to redirect to your portal.
-              </p>
-            </div>
-          ) : (
-            <form className="space-y-6" onSubmit={handleSubmit} noValidate>
+          <form className="space-y-6" onSubmit={handleSubmit} noValidate>
               <div>
                 <label htmlFor="email" className="block font-label-md text-label-md text-on-surface mb-2">Work Email</label>
                 <input
@@ -126,7 +122,6 @@ export default function Login() {
                 {status === 'submitting' ? 'Signing in…' : 'Sign in to Portal'}
               </button>
             </form>
-          )}
 
           <div className="text-center pt-6 border-t border-outline-variant">
             <p className="font-body-sm text-body-sm text-secondary">

@@ -1,0 +1,12 @@
+{
+  "name": "CaribVestio",
+  "short_name": "CaribVestio",
+  "description": "Bulk uniforms for Caribbean businesses, sourced direct from manufacturers.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#131b2e",
+  "theme_color": "#131b2e",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

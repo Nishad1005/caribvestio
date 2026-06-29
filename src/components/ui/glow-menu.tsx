@@ -141,7 +141,7 @@ export const MenuBar = React.forwardRef<HTMLDivElement, MenuBarProps>(
                       >
                         <Icon className="h-5 w-5" />
                       </span>
-                      <span className="hidden lg:inline whitespace-nowrap">{item.label}</span>
+                      <span className="sr-only lg:not-sr-only lg:inline whitespace-nowrap">{item.label}</span>
                     </motion.div>
                     <motion.div
                       className={cn(
@@ -167,7 +167,7 @@ export const MenuBar = React.forwardRef<HTMLDivElement, MenuBarProps>(
                       >
                         <Icon className="h-5 w-5" />
                       </span>
-                      <span className="hidden lg:inline whitespace-nowrap">{item.label}</span>
+                      <span className="sr-only lg:not-sr-only lg:inline whitespace-nowrap">{item.label}</span>
                     </motion.div>
                   </motion.div>
                 </button>

@@ -1,7 +1,13 @@
-import { motion, useReducedMotion } from 'framer-motion';
+import { useState } from 'react';
+import { motion, AnimatePresence, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ClipboardList, FileText, CheckCircle2, Truck, ChevronRight, Factory, Scale, HandCoins, Scissors, Globe, Package, Sparkles, Ruler, Layers, Quote, ChevronDown } from 'lucide-react';
+import { ClipboardList, FileText, CheckCircle2, Truck, Factory, Scale, HandCoins, Scissors, Globe, Package, Sparkles, Ruler, Layers, Quote, ChevronDown } from 'lucide-react';
 import IndustryCarousel from '@/components/ui/carousel-card';
+import Faq from '@/components/Faq';
+import CountUp from '@/components/CountUp';
+import Aurora from '@/components/Aurora';
+import Marquee from '@/components/Marquee';
+import Magnetic from '@/components/Magnetic';
 import { LogoIcon } from '@/components/Logo';
 import { industries } from '@/data/industries';
 
@@ -20,6 +26,8 @@ export default function Home() {
   };
 
   const reduce = useReducedMotion();
+  const { scrollY } = useScroll();
+  const heroY = useTransform(scrollY, [0, 900], reduce ? [0, 0] : [0, 90]);
 
   // Each step's icon performs a one-time gesture on scroll-in (and on hover)
   // that echoes the action: submit lifts, quote tilts, approve pops, delivery drives.
@@ -29,6 +37,9 @@ export default function Home() {
     { icon: CheckCircle2, title: 'Approve & Pay Direct', desc: 'Review the sample for quality, fit and logo placement, then pay the manufacturer directly.', gesture: { scale: [1, 1.2, 1] }, hover: { scale: 1.12 } },
     { icon: Truck, title: 'Production & Delivery', desc: 'Production is coordinated by our ground teams in the Caribbean and India and delivered to your door.', gesture: { x: [0, 8, 0] }, hover: { x: 5 }, ambient: { x: [0, 4, 0] } },
   ];
+
+  const [active, setActive] = useState(0);
+  const ActiveIcon = steps[active].icon;
 
   const usps = [
     { icon: Factory, title: 'Direct from manufacturers', desc: 'You buy straight from the makers — never middlemen.', gesture: { y: [0, -5, 0] }, hover: { y: -3 } },
@@ -46,11 +57,13 @@ export default function Home() {
           initial={{ scale: 1.1, filter: 'brightness(0.8)' }}
           animate={{ scale: 1, filter: 'brightness(1)' }}
           transition={{ duration: 1.5, ease: "easeOut" }}
-          alt="Hero background" 
-          className="absolute inset-0 w-full h-full object-cover z-0" 
+          style={{ y: heroY }}
+          alt="Hero background"
+          className="absolute -top-[10%] left-0 w-full h-[120%] object-cover z-0"
           src="https://lh3.googleusercontent.com/aida-public/AB6AXuCP9CYlLsY4qhILS55j6QohRqbL2FSzpoB3CuhU78z-9ULt_tJBtx1Nec7gGvK4YMifpBusY_lDmMl1mFCZzuGiqd761A3TsUuo0vqJGrROfvTBLa9vJsGSo87XAanY03gKO-RcslYYqjCfXe9zRNV38Qfyvy1DQSptLmOQTU5XD0NgE-F024Xreij-CCmBXTItHAIt8I1QXh45KNpxxqJ8uTpArBBz10iK5O6zBBvyBSQKCT_jvkUtdbwWOeHL0UNoteGSXxs_ggRW"
         />
         <div className="absolute inset-0 hero-overlay z-10 pointer-events-none"></div>
+        <Aurora className="z-[12] opacity-30 mix-blend-screen" />
         <div aria-hidden="true" className="absolute inset-0 z-10 grain pointer-events-none"></div>
         <div className="relative z-20 w-full max-w-container-max mx-auto px-grid-margin pt-20">
           <motion.div 
@@ -69,9 +82,11 @@ export default function Home() {
               We connect you directly to vetted manufacturers — no middlemen. Compare quotes from multiple suppliers, pay the maker direct, and get tailor-made uniforms coordinated end-to-end across the Caribbean and India.
             </motion.p>
             <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4">
-              <Link to="/bulk-orders" className="btn btn-accent">
-                Request a Bulk Quote
-              </Link>
+              <Magnetic>
+                <Link to="/bulk-orders" className="btn btn-accent">
+                  Request a Bulk Quote
+                </Link>
+              </Magnetic>
               <Link to="/collections" className="btn btn-outline border-on-primary/40 text-on-primary hover:bg-on-primary/10">
                 Explore Collections
               </Link>
@@ -92,20 +107,34 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* Trust Badges Bar */}
-      <motion.section 
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
+      {/* Standard inclusions band */}
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
         viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-        className="w-full bg-surface-container-low py-8 border-b border-surface-variant dark:border-zinc-800 dark:bg-zinc-900 transition-colors duration-500"
+        variants={containerVariants}
+        className="w-full bg-surface-container-low border-y border-outline-variant/60 dark:border-zinc-800 py-10 md:py-12 transition-colors duration-500"
       >
-        <div className="max-w-container-max mx-auto px-grid-margin flex flex-wrap justify-center md:justify-between items-center gap-6">
-          <div className="flex items-center gap-2 text-on-surface-variant font-label-md text-label-md hover:text-primary transition-colors cursor-pointer"><Truck className="text-on-primary-fixed dark:text-primary-fixed h-5 w-5" /> Fast Caribbean Delivery</div>
-          <div className="flex items-center gap-2 text-on-surface-variant font-label-md text-label-md hover:text-primary transition-colors cursor-pointer"><Package className="text-on-primary-fixed dark:text-primary-fixed h-5 w-5" /> Bulk Orders</div>
-          <div className="flex items-center gap-2 text-on-surface-variant font-label-md text-label-md hover:text-primary transition-colors cursor-pointer"><Sparkles className="text-on-primary-fixed dark:text-primary-fixed h-5 w-5" /> Logo Embroidery</div>
-          <div className="flex items-center gap-2 text-on-surface-variant font-label-md text-label-md hover:text-primary transition-colors cursor-pointer"><Ruler className="text-on-primary-fixed dark:text-primary-fixed h-5 w-5" /> Custom Sizing</div>
-          <div className="flex items-center gap-2 text-on-surface-variant font-label-md text-label-md hover:text-primary transition-colors cursor-pointer"><Layers className="text-on-primary-fixed dark:text-primary-fixed h-5 w-5" /> Quality Fabrics</div>
+        <div className="max-w-container-max mx-auto px-grid-margin grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-y-8 lg:gap-y-0 lg:divide-x lg:divide-outline-variant/50">
+          {[
+            { icon: Truck, label: 'Fast Caribbean Delivery' },
+            { icon: Package, label: 'Bulk Orders' },
+            { icon: Sparkles, label: 'Logo Embroidery' },
+            { icon: Ruler, label: 'Custom Sizing' },
+            { icon: Layers, label: 'Quality Fabrics' },
+          ].map((b) => {
+            const Icon = b.icon;
+            return (
+              <motion.div key={b.label} variants={itemVariants} className="group flex flex-col items-center gap-3 text-center px-4">
+                <span className="grid h-12 w-12 place-items-center rounded-full bg-on-primary-fixed text-on-primary transition-all duration-300 group-hover:-translate-y-1 group-hover:bg-gold group-hover:text-on-primary-fixed">
+                  <Icon className="h-5 w-5" strokeWidth={1.75} aria-hidden="true" />
+                </span>
+                <span className="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant transition-colors group-hover:text-primary dark:group-hover:text-on-primary">
+                  {b.label}
+                </span>
+              </motion.div>
+            );
+          })}
         </div>
       </motion.section>
 
@@ -203,65 +232,82 @@ export default function Home() {
             <h2 className="font-headline-xl-mobile md:font-headline-xl text-headline-xl-mobile md:text-headline-xl text-primary dark:text-zinc-100 mb-4 tracking-tight">Streamlined Bulk Ordering</h2>
             <p className="font-body-md text-body-md text-on-surface-variant dark:text-zinc-400 max-w-2xl mx-auto">From initial consultation to final delivery, our process is designed to be seamless for businesses of all sizes across the Caribbean.</p>
           </motion.div>
-          <motion.div 
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="grid grid-cols-1 md:grid-cols-4 gap-8"
-          >
-            {/* Steps */}
-            {steps.map((step, i) => {
-              const Icon = step.icon;
-              return (
-                <motion.div variants={itemVariants} key={i} className="group relative bg-surface-container-lowest dark:bg-zinc-800 p-8 rounded-2xl ambient-shadow transition-transform duration-300 hover:-translate-y-2">
-                  {/* Flow connector to the next step (desktop) */}
-                  {i < steps.length - 1 && (
-                    <motion.span
-                      aria-hidden="true"
-                      initial={{ opacity: 0, x: -6 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: 0.35 + i * 0.18, duration: 0.4 }}
-                      className="hidden md:flex absolute top-[2.75rem] -right-8 z-10 h-8 w-8 items-center justify-center rounded-full bg-surface-container-high dark:bg-zinc-700 text-on-primary-fixed dark:text-zinc-200 shadow-sm"
+          <div className="grid lg:grid-cols-2 gap-grid-gutter">
+            {/* Left: sticky active visual (lg+) */}
+            <div className="hidden lg:block">
+              <div className="sticky top-32 flex h-[440px] flex-col justify-center overflow-hidden rounded-3xl bg-surface-container-lowest dark:bg-zinc-800 ambient-shadow p-12">
+                <div className="absolute right-10 top-12 bottom-12 flex flex-col items-center justify-between">
+                  {steps.map((_, i) => (
+                    <span
+                      key={i}
+                      className={`h-2.5 w-2.5 rounded-full transition-all duration-300 ${
+                        i === active ? 'bg-gold scale-125' : i < active ? 'bg-on-tertiary-container' : 'bg-outline-variant'
+                      }`}
+                    />
+                  ))}
+                </div>
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={active}
+                    initial={{ opacity: 0, y: 24 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -24 }}
+                    transition={{ duration: 0.4, ease: 'easeOut' }}
+                  >
+                    <span className="mb-7 grid h-20 w-20 place-items-center rounded-2xl bg-on-primary-fixed text-on-primary">
+                      <ActiveIcon className="h-9 w-9" strokeWidth={1.75} />
+                    </span>
+                    <p className="font-label-md text-label-md uppercase tracking-[0.2em] text-gold-dim dark:text-gold mb-3">
+                      Step {active + 1} of {steps.length}
+                    </p>
+                    <h3 className="font-headline-xl-mobile md:font-headline-xl text-headline-xl-mobile md:text-headline-xl text-primary dark:text-on-primary tracking-tight">
+                      {steps[active].title}
+                    </h3>
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+            </div>
+
+            {/* Right: scroll-through steps */}
+            <div>
+              {steps.map((step, i) => {
+                const Icon = step.icon;
+                return (
+                  <motion.div
+                    key={i}
+                    onViewportEnter={() => setActive(i)}
+                    viewport={{ margin: '-45% 0px -45% 0px' }}
+                    className="flex flex-col justify-center border-b border-outline-variant/40 py-10 last:border-0 lg:min-h-[62vh] lg:border-0"
+                  >
+                    <div className="mb-4 flex items-center gap-3 lg:hidden">
+                      <span className="grid h-12 w-12 place-items-center rounded-full bg-on-primary-fixed text-on-primary">
+                        <Icon className="h-5 w-5" strokeWidth={1.75} />
+                      </span>
+                      <span className="font-label-md text-label-md uppercase tracking-wider text-gold-dim dark:text-gold">Step {i + 1}</span>
+                    </div>
+                    <p className="hidden lg:block font-display-lg text-[80px] font-bold leading-none text-outline-variant/40 mb-3">
+                      {String(i + 1).padStart(2, '0')}
+                    </p>
+                    <h3
+                      className={`font-headline-md text-2xl md:text-3xl mb-3 tracking-tight transition-colors duration-300 ${
+                        active === i
+                          ? 'text-primary dark:text-on-primary'
+                          : 'text-primary dark:text-on-primary lg:text-on-surface-variant lg:dark:text-zinc-500'
+                      }`}
                     >
-                      <ChevronRight className="h-4 w-4" />
-                    </motion.span>
-                  )}
-                  <div className="relative mb-6 inline-flex">
-                    <motion.div
-                      whileHover={reduce ? undefined : step.hover}
-                      whileInView={reduce || step.ambient ? undefined : step.gesture}
-                      animate={reduce || !step.ambient ? undefined : step.ambient}
-                      viewport={{ once: true }}
-                      transition={
-                        step.ambient
-                          ? { repeat: Infinity, repeatType: 'loop', duration: 1.8, ease: 'easeInOut' }
-                          : { duration: 0.7, delay: 0.25 + i * 0.15 }
-                      }
-                      className="flex h-14 w-14 items-center justify-center rounded-full bg-on-primary-fixed dark:bg-zinc-700 text-on-primary dark:text-zinc-100"
-                    >
-                      <Icon className="h-6 w-6" strokeWidth={1.75} />
-                    </motion.div>
+                      {step.title}
+                    </h3>
+                    <p className="font-body-md text-body-md text-on-surface-variant dark:text-zinc-400 max-w-md">{step.desc}</p>
                     {step.badge && (
-                      <motion.span
-                        initial={{ opacity: 0, scale: 0.5 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.55, type: 'spring', stiffness: 320, damping: 16 }}
-                        className="absolute -top-2 -right-3 rounded-full bg-on-tertiary-container px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide text-white shadow-sm"
-                      >
-                        {step.badge}
-                      </motion.span>
+                      <span className="mt-4 inline-block rounded-full bg-on-tertiary-container px-3 py-1 text-xs font-bold uppercase tracking-wide text-white">
+                        {step.badge} turnaround
+                      </span>
                     )}
-                  </div>
-                  <p className="font-label-md text-label-md uppercase tracking-wider text-on-tertiary-container mb-2">Step {i + 1}</p>
-                  <h4 className="font-headline-md text-xl mb-3 text-primary dark:text-zinc-100">{step.title}</h4>
-                  <p className="font-body-md text-body-md text-on-surface-variant dark:text-zinc-400">{step.desc}</p>
-                </motion.div>
-              );
-            })}
-          </motion.div>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </div>
         </div>
       </section>
 
@@ -281,7 +327,7 @@ export default function Home() {
             { value: '98%', label: 'On-time delivery' },
           ].map((stat, i) => (
             <motion.div variants={itemVariants} key={i}>
-              <p className="font-display-md text-display-md text-primary dark:text-on-primary mb-2 tabular-nums">{stat.value}</p>
+              <p className="font-display-md text-display-md text-primary dark:text-on-primary mb-2 tabular-nums"><CountUp value={stat.value} /></p>
               <p className="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant">{stat.label}</p>
             </motion.div>
           ))}
@@ -307,19 +353,23 @@ export default function Home() {
         </motion.figure>
       </section>
 
-      {/* Social Proof: Trusted-by sectors */}
-      <section className="pb-section-gap-mobile md:pb-section-gap-desktop w-full max-w-container-max mx-auto px-grid-margin">
-        <p className="text-center font-label-md text-label-md uppercase tracking-[0.2em] text-on-surface-variant mb-8">
+      {/* Social Proof: Trusted-by sectors (marquee) */}
+      <section className="pb-section-gap-mobile md:pb-section-gap-desktop w-full">
+        <p className="text-center font-label-md text-label-md uppercase tracking-[0.2em] text-on-surface-variant mb-8 px-grid-margin">
           Trusted by teams across the Caribbean
         </p>
-        <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-6 opacity-70">
-          {['Hospitality', 'Healthcare', 'Finance', 'Aviation', 'Industrial'].map((sector) => (
-            <span key={sector} className="font-headline-md text-xl md:text-2xl text-on-surface-variant tracking-tight">
+        <Marquee>
+          {['Security', 'Hospitality', 'Healthcare', 'Schools', 'Corporate', 'Finance', 'Aviation', 'Retail'].map((sector) => (
+            <span key={sector} className="mx-8 font-headline-md text-xl md:text-2xl text-on-surface-variant/70 tracking-tight">
               {sector}
+              <span className="ml-8 text-gold/50">•</span>
             </span>
           ))}
-        </div>
+        </Marquee>
       </section>
+
+      {/* FAQ */}
+      <Faq />
 
       {/* Final CTA */}
       <section className="py-section-gap-mobile md:py-section-gap-desktop w-full max-w-container-max mx-auto px-grid-margin">
@@ -330,13 +380,15 @@ export default function Home() {
           transition={{ duration: 0.6 }}
           className="bg-on-primary-fixed dark:bg-black rounded-3xl p-12 md:p-24 text-center relative overflow-hidden border border-outline-variant/10 dark:border-outline-variant/20 shadow-overlay"
         >
-          <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white dark:from-primary-fixed to-transparent"></div>
+          <Aurora />
           <div className="relative z-10">
             <h2 className="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-on-primary mb-6 tracking-tight">Ready to Dress Your Team Professionally?</h2>
             <p className="font-body-lg text-body-lg text-on-primary/80 max-w-2xl mx-auto mb-10">Join hundreds of Caribbean businesses that trust CaribVestio for their corporate identity. Let's create uniforms your team will be proud to wear.</p>
-            <Link to="/contact" className="btn btn-accent px-10 text-lg">
-              Start Your Order Today
-            </Link>
+            <Magnetic>
+              <Link to="/contact" className="btn btn-accent px-10 text-lg">
+                Start Your Order Today
+              </Link>
+            </Magnetic>
           </div>
         </motion.div>
       </section>

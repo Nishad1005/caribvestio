@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /login
+Disallow: /quote
+
+Sitemap: https://www.caribvestio.com/sitemap.xml

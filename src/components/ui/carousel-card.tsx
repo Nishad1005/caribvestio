@@ -1,7 +1,42 @@
 'use client'
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, type ReactNode, type MouseEvent } from "react";
+import { motion, useMotionValue, useSpring, useTransform, useReducedMotion } from "framer-motion";
 import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+
+// Subtle 3D tilt that follows the pointer; flattens out (and disables) under reduced motion.
+function TiltCard({ children }: { children: ReactNode }) {
+  const reduce = useReducedMotion();
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const xs = useSpring(x, { stiffness: 200, damping: 18 });
+  const ys = useSpring(y, { stiffness: 200, damping: 18 });
+  const rotateX = useTransform(ys, [-0.5, 0.5], [6, -6]);
+  const rotateY = useTransform(xs, [-0.5, 0.5], [-6, 6]);
+
+  if (reduce) return <div className="h-full">{children}</div>;
+
+  const handleMove = (e: MouseEvent<HTMLDivElement>) => {
+    const r = e.currentTarget.getBoundingClientRect();
+    x.set((e.clientX - r.left) / r.width - 0.5);
+    y.set((e.clientY - r.top) / r.height - 0.5);
+  };
+  const reset = () => {
+    x.set(0);
+    y.set(0);
+  };
+
+  return (
+    <motion.div
+      onMouseMove={handleMove}
+      onMouseLeave={reset}
+      style={{ rotateX, rotateY, transformPerspective: 900 }}
+      className="h-full"
+    >
+      {children}
+    </motion.div>
+  );
+}
 
 export interface CardData {
   id: number;
@@ -106,7 +141,7 @@ const Card = ({ data, showCarousel = true, cardsPerView = 3 }: CardProps) => {
               aria-label="Previous industries"
               className="absolute left-1 md:left-2 top-1/2 -translate-y-1/2 z-20 grid h-11 w-11 place-items-center rounded-full bg-primary text-on-primary shadow-card transition hover:scale-105 active:scale-100 disabled:opacity-50"
             >
-              <ChevronLeft className="h-5 w-5" />
+              <ChevronLeft aria-hidden="true" className="h-5 w-5" />
             </button>
             <button
               onClick={nextSlide}
@@ -114,7 +149,7 @@ const Card = ({ data, showCarousel = true, cardsPerView = 3 }: CardProps) => {
               aria-label="Next industries"
               className="absolute right-1 md:right-2 top-1/2 -translate-y-1/2 z-20 grid h-11 w-11 place-items-center rounded-full bg-primary text-on-primary shadow-card transition hover:scale-105 active:scale-100 disabled:opacity-50"
             >
-              <ChevronRight className="h-5 w-5" />
+              <ChevronRight aria-hidden="true" className="h-5 w-5" />
             </button>
           </>
         )}
@@ -165,10 +200,10 @@ const Card = ({ data, showCarousel = true, cardsPerView = 3 }: CardProps) => {
                 >
                   {card.href ? (
                     <Link to={card.href} className="block h-full">
-                      {inner}
+                      <TiltCard>{inner}</TiltCard>
                     </Link>
                   ) : (
-                    inner
+                    <TiltCard>{inner}</TiltCard>
                   )}
                 </div>
               );

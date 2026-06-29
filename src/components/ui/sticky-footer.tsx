@@ -121,6 +121,7 @@ const footerLinkGroups: FooterLinkGroup[] = [
 	{
 		label: 'Services',
 		links: [
+			{ title: 'Request a Quote', href: '/quote' },
 			{ title: 'Bulk Orders', href: '/bulk-orders' },
 			{ title: 'Custom Sizing', href: '/bulk-orders' },
 			{ title: 'Logo Embroidery', href: '/bulk-orders' },

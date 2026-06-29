@@ -4,10 +4,12 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useTheme } from 'next-themes';
 import { MenuBar } from '@/components/ui/glow-menu';
 import Logo from '@/components/Logo';
+import { useAuth } from '@/context/AuthContext';
 import { Home, ShoppingBag, Package, Info, Sun, Moon, MessageSquare, User } from 'lucide-react';
 
 export default function TopNavBar() {
   const { theme, setTheme } = useTheme();
+  const { user } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -49,8 +51,8 @@ export default function TopNavBar() {
     },
     {
       icon: User,
-      label: "Login",
-      href: "/login",
+      label: user ? "Portal" : "Login",
+      href: user ? "/portal" : "/login",
       gradient: "radial-gradient(circle, rgba(14,165,233,0.15) 0%, rgba(2,132,199,0.06) 50%, rgba(3,105,161,0) 100%)",
       iconColor: "text-sky-500",
     },

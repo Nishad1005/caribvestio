@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600&family=Playfair+Display:wght@600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600&family=Space+Grotesk:wght@500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -111,6 +111,15 @@
     background: linear-gradient(180deg, rgba(19, 27, 46, 0.12) 0%, rgba(19, 27, 46, 0.32) 100%);
     mix-blend-mode: multiply;
   }
+  /* Infinite horizontal marquee (content is duplicated for a seamless loop) */
+  .marquee-track {
+    animation: marquee 32s linear infinite;
+  }
+  /* Slow-drifting aurora blobs (used behind dark sections) */
+  .aurora-a { animation: aurora-a 19s ease-in-out infinite; }
+  .aurora-b { animation: aurora-b 23s ease-in-out infinite; }
+  .aurora-c { animation: aurora-c 27s ease-in-out infinite; }
+
   /* Animated gold underline that grows on hover/focus */
   .link-underline {
     background-image: linear-gradient(theme('colors.gold'), theme('colors.gold'));
@@ -151,6 +160,23 @@
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes aurora-a {
+  0%, 100% { transform: translate(-10%, -10%) scale(1); }
+  50% { transform: translate(15%, 10%) scale(1.25); }
+}
+@keyframes aurora-b {
+  0%, 100% { transform: translate(10%, 5%) scale(1.1); }
+  50% { transform: translate(-12%, -8%) scale(0.9); }
+}
+@keyframes aurora-c {
+  0%, 100% { transform: translate(5%, 15%) scale(1); }
+  50% { transform: translate(-8%, -12%) scale(1.2); }
 }
 
 /* View Transitions for Theme Toggle */

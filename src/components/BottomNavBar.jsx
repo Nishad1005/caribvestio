@@ -1,15 +1,19 @@
 import { Link, useLocation } from 'react-router-dom';
 import { Home, ShoppingBag, ReceiptText, User } from 'lucide-react';
-
-const items = [
-  { to: '/', icon: Home, label: 'Home' },
-  { to: '/collections', icon: ShoppingBag, label: 'Collections' },
-  { to: '/contact', icon: ReceiptText, label: 'Quote' },
-  { to: '/login', icon: User, label: 'Login' },
-];
+import { useAuth } from '@/context/AuthContext';
 
 export default function BottomNavBar() {
   const { pathname } = useLocation();
+  const { user } = useAuth();
+
+  const items = [
+    { to: '/', icon: Home, label: 'Home' },
+    { to: '/collections', icon: ShoppingBag, label: 'Collections' },
+    { to: '/quote', icon: ReceiptText, label: 'Quote' },
+    user
+      ? { to: '/portal', icon: User, label: 'Portal' }
+      : { to: '/login', icon: User, label: 'Login' },
+  ];
 
   return (
     <nav className="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center pt-3 pb-safe px-4 md:hidden bg-background/90 dark:bg-on-primary-fixed/90 backdrop-blur-lg border-t border-outline-variant shadow-[0px_-4px_16px_rgba(0,0,0,0.05)] rounded-t-xl">
