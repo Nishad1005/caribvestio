@@ -1,44 +1,65 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
-
-interface User {
-  email: string;
-  since: string;
-}
+import type { User } from '@supabase/supabase-js';
+import { supabase } from '@/lib/supabase';
 
 interface AuthValue {
   user: User | null;
-  signIn: (email: string) => void;
-  signOut: () => void;
+  loading: boolean;
+  isConfigured: boolean;
+  signUp: (email: string, password: string, fullName?: string) => Promise<{ error: Error | null; needsConfirmation: boolean }>;
+  signIn: (email: string, password: string) => Promise<{ error: Error | null }>;
+  signOut: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthValue | null>(null);
-const STORAGE_KEY = 'cv-auth-user';
 
-// Mock/demo auth: there is no backend yet, so a "session" is just an email
-// persisted to localStorage. Swap signIn for a real API call when ready.
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(() => {
-    try {
-      return JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
-    } catch {
-      return null;
-    }
-  });
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    try {
-      if (user) localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
-      else localStorage.removeItem(STORAGE_KEY);
-    } catch {
-      /* ignore storage errors */
+    if (!supabase) {
+      setLoading(false);
+      return;
     }
-  }, [user]);
+    supabase.auth.getSession().then(({ data }) => {
+      setUser(data.session?.user ?? null);
+      setLoading(false);
+    });
+    const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+    return () => sub.subscription.unsubscribe();
+  }, []);
 
-  const signIn = (email: string) => setUser({ email, since: 'demo' });
-  const signOut = () => setUser(null);
+  const signUp: AuthValue['signUp'] = async (email, password, fullName) => {
+    if (!supabase) return { error: new Error('Authentication is not configured.'), needsConfirmation: false };
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: { data: { full_name: fullName ?? '' } },
+    });
+    // With email confirmation enabled, signUp returns no session until the user confirms.
+    return { error: error as Error | null, needsConfirmation: !error && !data.session };
+  };
 
-  return <AuthContext.Provider value={{ user, signIn, signOut }}>{children}</AuthContext.Provider>;
+  const signIn: AuthValue['signIn'] = async (email, password) => {
+    if (!supabase) return { error: new Error('Authentication is not configured.') };
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    return { error: error as Error | null };
+  };
+
+  const signOut = async () => {
+    if (supabase) await supabase.auth.signOut();
+    setUser(null);
+  };
+
+  return (
+    <AuthContext.Provider value={{ user, loading, isConfigured: !!supabase, signUp, signIn, signOut }}>
+      {children}
+    </AuthContext.Provider>
+  );
 }
 
 export function useAuth() {

@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Minus, Plus, Trash2, ArrowRight, CheckCircle2, FileText } from 'lucide-react';
+import { Minus, Plus, Trash2, ArrowRight, CheckCircle2, FileText, AlertCircle } from 'lucide-react';
 import { useQuote } from '@/context/QuoteContext';
+import { sendEnquiry } from '@/lib/enquiry';
 
-// Where quote requests are delivered. Replace with the real address.
-// To deliver server-side instead of opening the email client, swap the
-// `mailto:` in handleSubmit for a fetch() to your endpoint (e.g. Formspree).
-const QUOTE_EMAIL = 'enquiry@caribvestio.com';
+// Shown as a fallback; enquiries are delivered to the address registered with
+// your Web3Forms access key (see .env.example).
+const CONTACT_EMAIL = 'enquiry@caribvestio.com';
 
 const fieldBase =
   'w-full bg-transparent border-0 border-b rounded-none px-0 py-3 font-body-md text-body-md text-on-surface placeholder:text-outline-variant focus:ring-0 transition-colors';
@@ -15,7 +15,7 @@ export default function Quote() {
   const { items, setQty, removeItem, clear } = useQuote();
   const [form, setForm] = useState({ name: '', company: '', email: '', phone: '', notes: '' });
   const [errors, setErrors] = useState({});
-  const [status, setStatus] = useState('idle'); // idle | success
+  const [status, setStatus] = useState('idle'); // idle | submitting | success | error
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -45,20 +45,29 @@ export default function Quote() {
     return lines.join('\n');
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (items.length === 0) return;
     const found = validate();
     setErrors(found);
     if (Object.keys(found).length > 0) return;
 
-    const subject = `Bulk Quote Request — ${form.company}`;
-    const mailto = `mailto:${QUOTE_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(composeBody())}`;
-    // Opens the buyer's email client with the request pre-filled.
-    window.location.href = mailto;
-
-    setStatus('success');
-    clear();
+    setStatus('submitting');
+    try {
+      await sendEnquiry({
+        subject: `Bulk Quote Request — ${form.company}`,
+        from_name: form.name,
+        email: form.email,
+        replyto: form.email,
+        company: form.company,
+        phone: form.phone || '—',
+        message: composeBody(),
+      });
+      setStatus('success');
+      clear();
+    } catch {
+      setStatus('error');
+    }
   };
 
   const borderFor = (key) => (errors[key] ? 'border-error focus:border-error' : 'border-outline-variant focus:border-primary');
@@ -70,8 +79,8 @@ export default function Quote() {
         <CheckCircle2 className="mx-auto h-14 w-14 text-on-tertiary-container mb-6" />
         <h1 className="font-display-md text-display-md text-primary dark:text-on-primary mb-4 tracking-tight">Quote request ready</h1>
         <p className="font-body-md text-body-md text-on-surface-variant mb-8">
-          Your email app should have opened with the request pre-filled — just hit send. If it didn't, email us at{' '}
-          <a href={`mailto:${QUOTE_EMAIL}`} className="text-primary dark:text-on-primary underline">{QUOTE_EMAIL}</a>. Our team replies within 48 hours.
+          Thanks — your bulk quote request is on its way to our team, and we reply within 48 hours. Prefer email? Reach us at{' '}
+          <a href={`mailto:${CONTACT_EMAIL}`} className="text-primary dark:text-on-primary underline">{CONTACT_EMAIL}</a>.
         </p>
         <Link to="/collections" className="btn btn-primary">Browse more industries <ArrowRight className="h-4 w-4" /></Link>
       </section>
@@ -171,7 +180,14 @@ export default function Quote() {
               <label htmlFor="notes" className="block font-label-md text-label-md text-on-surface mb-2 uppercase tracking-wider">Notes (sizes, logo, deadline…)</label>
               <textarea id="notes" rows="3" value={form.notes} onChange={handleChange} className={`${fieldBase} border-outline-variant focus:border-primary resize-none`} placeholder="e.g. 20×S, 40×M, 15×L · embroidered logo on left chest · needed by August" />
             </div>
-            <button type="submit" className="btn btn-primary w-full">Send quote request <ArrowRight className="h-4 w-4" /></button>
+            {status === 'error' && (
+              <p role="alert" className="flex items-center gap-2 font-body-sm text-body-sm text-error">
+                <AlertCircle className="h-4 w-4 shrink-0" aria-hidden="true" /> Couldn't send — please try again, or email {CONTACT_EMAIL}.
+              </p>
+            )}
+            <button type="submit" disabled={status === 'submitting'} className="btn btn-primary w-full disabled:opacity-60 disabled:cursor-not-allowed">
+              {status === 'submitting' ? 'Sending…' : <>Send quote request <ArrowRight className="h-4 w-4" /></>}
+            </button>
             <p className="font-body-sm text-body-sm text-on-surface-variant text-center">No payment now — this just starts the conversation.</p>
           </form>
         </div>

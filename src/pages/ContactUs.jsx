@@ -1,5 +1,8 @@
 import { useState } from 'react';
-import { MapPin, Phone, Mail, MailCheck, ChevronDown, MessageCircle } from 'lucide-react';
+import { MapPin, Phone, Mail, MailCheck, ChevronDown, MessageCircle, AlertCircle } from 'lucide-react';
+import { sendEnquiry } from '@/lib/enquiry';
+
+const CONTACT_EMAIL = 'enquiry@caribvestio.com';
 
 const fieldBase =
   'w-full bg-transparent border-0 border-b rounded-none px-0 py-3 font-body-md text-body-md text-on-surface placeholder:text-outline-variant focus:ring-0 transition-colors';
@@ -14,7 +17,7 @@ export default function ContactUs() {
     message: '',
   });
   const [errors, setErrors] = useState({});
-  const [status, setStatus] = useState('idle'); // idle | submitting | success
+  const [status, setStatus] = useState('idle'); // idle | submitting | success | error
 
   const validate = () => {
     const next = {};
@@ -31,13 +34,26 @@ export default function ContactUs() {
     if (errors[id]) setErrors((er) => ({ ...er, [id]: undefined }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const found = validate();
     setErrors(found);
     if (Object.keys(found).length > 0) return;
     setStatus('submitting');
-    setTimeout(() => setStatus('success'), 800);
+    try {
+      await sendEnquiry({
+        subject: `${form.subject} — ${form.name}${form.company ? ` (${form.company})` : ''}`,
+        from_name: form.name,
+        email: form.email,
+        replyto: form.email,
+        company: form.company || '—',
+        phone: form.phone || '—',
+        message: form.message,
+      });
+      setStatus('success');
+    } catch {
+      setStatus('error');
+    }
   };
 
   const borderFor = (key) => (errors[key] ? 'border-error focus:border-error' : 'border-outline-variant focus:border-primary');
@@ -141,6 +157,11 @@ export default function ContactUs() {
                   {errors.message && <p id="message-error" className="mt-1.5 font-body-sm text-body-sm text-error">{errors.message}</p>}
                 </div>
                 <div className="pt-4">
+                  {status === 'error' && (
+                    <p role="alert" className="mb-4 flex items-center gap-2 font-body-sm text-body-sm text-error">
+                      <AlertCircle className="h-4 w-4 shrink-0" aria-hidden="true" /> Couldn't send — please try again, or email {CONTACT_EMAIL}.
+                    </p>
+                  )}
                   <button disabled={status === 'submitting'} className="bg-primary text-on-primary font-label-md text-label-md px-8 py-4 rounded hover:bg-surface-tint transition-all duration-300 w-full md:w-auto uppercase tracking-wider disabled:opacity-60 disabled:cursor-not-allowed" type="submit">
                     {status === 'submitting' ? 'Sending…' : 'Send Message'}
                   </button>

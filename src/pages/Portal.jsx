@@ -11,18 +11,20 @@ const SAMPLE_ORDERS = [
 ];
 
 export default function Portal() {
-  const { user, signOut } = useAuth();
+  const { user, loading, signOut } = useAuth();
   const { items } = useQuote();
   const navigate = useNavigate();
 
+  if (loading) return <div className="min-h-[60vh]" />;
   if (!user) return <Navigate to="/login" replace />;
 
-  const handleSignOut = () => {
-    signOut();
+  const handleSignOut = async () => {
+    await signOut();
     navigate('/');
   };
 
-  const firstName = user.email.split('@')[0];
+  const fullName = user.user_metadata?.full_name;
+  const firstName = (fullName && fullName.split(' ')[0]) || user.email.split('@')[0];
 
   return (
     <section className="w-full max-w-container-max mx-auto px-grid-margin pt-32 md:pt-40 pb-section-gap-mobile md:pb-section-gap-desktop">

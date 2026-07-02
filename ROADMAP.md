@@ -7,12 +7,17 @@ launched, production-grade B2B uniform-sourcing platform.
 
 ---
 
-## 📌 Pinned — do these before launch (after current polish)
-The site is being brought "up to the mark" visually first; these two are the gated
-next priorities to make it a *working* product:
+## 📌 Pinned — finish setup to go live
+Both are now **integrated in code** and just need keys pasted into `.env`
+(copy `.env.example` → `.env`, then restart the dev server):
 
-1. **Wire the forms to a real backend** — Quote + Contact must actually deliver leads (see _Forms & Lead Delivery_).
-2. **Real authentication** — replace the demo session with real auth + password check (see _Backend & Authentication_).
+1. **Accounts** — Supabase Auth is wired (signup/login/session/sign-out). Create a
+   free Supabase project, enable the **Email** provider, and set `VITE_SUPABASE_URL`
+   + `VITE_SUPABASE_ANON_KEY`. (Optional: turn off "Confirm email" in Supabase for
+   instant login without the confirmation step.)
+2. **Enquiry emails** — Quote + Contact forms POST to **Web3Forms**. Get a free access
+   key at web3forms.com registered to `enquiry@caribvestio.com` and set
+   `VITE_WEB3FORMS_ACCESS_KEY`. Until then the forms show a "not configured" path.
 
 ---
 
